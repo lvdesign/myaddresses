@@ -1,0 +1,19 @@
+extends layout
+
+include mixins/_storeCard
+
+block content
+    .inner
+        
+        h2 #{title} ( #{categorie} )
+        //- pre= h.dump(categories)
+        ul.tags
+            each c in categories
+                li.tag 
+                    a.tag__link(href=`/categories/${c._id}` class=(c._id === categorie ? 'tag__link--active' : '') )
+                        span.tag__text= c._id
+                        span.tag__count= c.count
+        //- pre= h.dump(stores)
+        .stores
+            each store in stores
+                +storeCard(store)

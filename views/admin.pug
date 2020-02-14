@@ -1,0 +1,13 @@
+extends layout
+
+
+block content
+    .inner
+        h2 title 
+            
+            each store in stores
+                p
+                    a(href=`/store/${store.slug}`) #{store.name} 
+                        span  de ##{store.author.name}    
+            
+        
