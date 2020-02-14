@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         required: 'SVP, un nom !',
         trim: true
     },
+    gravatars:{
+        type: String,
+        default: 'avatar.svg'
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date ,
     hearts: [

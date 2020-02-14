@@ -40,7 +40,7 @@ exports.addStore = (req,res) =>{
 };
 
 
-// Upload
+// Upload Image
 exports.upload = multer(multerOptions).single('photo');
 
 exports.resize = async (req,res,next) => {
@@ -161,7 +161,6 @@ exports.getStoresByTag = async (req,res) => {
 
 // GET Categories page
 exports.getStoresByCat = async (req,res) => {
-
     const categorie = req.params.categorie;
     const categorieQuery = categorie || {$exists:true};
 

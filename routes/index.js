@@ -66,7 +66,10 @@ router.post('/login', authController.login);
 
 router.get('/register', userController.registerForm );
 router.post('/register', 
+   
     userController.validateRegister,
+    userController.upload,
+    catchErrors(userController.resize),
     catchErrors(userController.register),
     authController.login
 );
@@ -81,7 +84,10 @@ router.get('/account',
     userController.account);
 
 // POST
-router.post('/account', catchErrors(userController.updateAccount) );
+router.post('/account', 
+userController.upload,
+    catchErrors(userController.resize),
+catchErrors(userController.updateAccount) );
 
 router.post('/account/forgot',catchErrors(authController.forgot) );
 

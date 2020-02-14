@@ -2,12 +2,25 @@ extends layout
 
 block content
   .inner
-    h2 Edit Your Account
-    form(action="/account" method="POST")
-      label(for="name") Name
+    h2 Editez Votre Account #{user.name}
+    if user 
+    img.avatar(src=`/uploads/gravatar/${ user.gravatars || 'avatar.svg' }` alt=user.name) 
+     
+    if !user.gravatars
+    p ps. N'hésitez pas à ajouter un avatar #{user.name} !  
+
+
+    form(action="/account" method="POST" enctype="multipart/form-data")
+      label(for="name") Votre Nom
       input(type="text" name="name" value=user.name)
-      label(for="email") Email Address
+      label(for="email") Votre Email Address
       input(type="email" name="email" value=user.email)
+
+      label(for="gravatars") Votre Avatar
+      input(type="file" name="gravatars" id="gravatars" accept="image/png, image/jpeg")
+      
       input.button(type="submit" value="Update My Account")
 
+
     h2 Mes Addresses 
+    
