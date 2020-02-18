@@ -1,4 +1,36 @@
 @charset "UTF-8";
+/* FOOTER */
+.footer {
+  background-color: black;
+  color: white;
+  padding: 2em;
+  display: -ms-flexbox;
+  display: flex; }
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  padding: .5em .8em; }
+
+.footer a:hover,
+.footer__link--active {
+  text-decoration: none;
+  background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%) fixed; }
+
+.footer__info {
+  display: block;
+  list-style: none; }
+
+.footer__info--details {
+  display: inline;
+  padding: 0; }
+
+@media all and (max-width: 375px) {
+  .footer {
+    display: block; }
+  .footer__info {
+    margin: 2rem 0; } }
+
 html {
   font-size: 10px; }
 
@@ -8,7 +40,7 @@ body {
   body:before {
     content: '';
     display: block;
-    background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
+    background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, yellow 85%, #48ded4 95%);
     height: 10px;
     width: 100%; }
 
@@ -38,7 +70,7 @@ img {
 /* Document
    ========================================================================== */
 html {
-  font-family: sans-serif;
+  font-family: serif;
   /* 1 */
   line-height: 1.15;
   /* 2 */
@@ -49,6 +81,11 @@ html {
 
 /* Sections
    ========================================================================== */
+
+::selection {
+  background: yellow;
+  text-shadow: none; }
+
 /**
  * Remove the margin in all browsers (opinionated).
  */
@@ -433,30 +470,39 @@ template {
   display: none; }
 
 @font-face {
-  font-family: 'panama';
-  src: url("/fonts/panama-bold-webfont.woff2") format("woff2"), url("/fonts/panama-bold-webfont.woff") format("woff");
+  font-family: 'league_spartanbold';
+  src: url("/fonts/leaguespartan-bold-webfont.woff2") format("woff2"), url("/fonts/leaguespartan-bold-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
 
 html {
-  font-size: 10px; }
+  font-size: 10px;
+  /*10px*/ }
 
 body {
   font-size: 1.5rem;
   color: #303030; }
 
+header.top {
+  background-color: #303030;
+  color: yellow; }
+  header.top h1 {
+    text-align: center;
+    margin: 0 auto;
+    padding-top: .2em; }
+
 h1, h2, h3, h4, h5, h6 {
   font-size: 5rem;
-  font-family: 'Panama';
+  font-family: 'league_spartanbold';
   font-weight: 600;
   letter-spacing: -1px; }
 
 a {
   text-decoration: none;
-  color: #303030; }
+  color: yellow; }
 
 p a {
-  border-bottom: 2px solid #FFC40E; }
+  border-bottom: 2px solid black; }
 
 p {
   line-height: 2;
@@ -467,7 +513,7 @@ p {
   position: relative;
   z-index: 2;
   margin: 0;
-  font-size: 40px;
+  font-size: 25px;
   z-index: 2;
   line-height: 1.1;
   -ms-transform: skew(0, -3deg);
@@ -488,13 +534,22 @@ p {
         transform: skew(-5deg); }
   .title a {
     border-bottom: 0;
-    background-image: linear-gradient(to right, rgba(255, 196, 14, 0.8) 100%, rgba(255, 196, 14, 0.8) 50%); }
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8) 100%, rgba(0, 0, 0, 0.8) 50%);
+    padding: 0 .5em; }
 
 .title--single {
   max-width: 600px;
   margin-top: -9rem;
-  font-size: 10rem;
+  font-size: 6rem;
   text-align: center; }
+
+a.special {
+  color: #303030; }
+
+a.special:hover {
+  color: #303030;
+  background: yellow;
+  text-decoration: none; }
 
 input, textarea {
   width: 100%;
@@ -510,7 +565,7 @@ label {
 .form {
   background: white;
   padding: 2rem;
-  box-shadow: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%); }
+  box-shadow: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, yellow 85%, #48ded4 95%); }
   .form + .form {
     margin-top: 4rem; }
   .form h2 {
@@ -577,7 +632,7 @@ label {
     background: none;
     border: 0; }
     .flash__remove:hover {
-      color: #FFC40E; }
+      color: yellow; }
   .flash:after {
     content: '';
     display: block;
@@ -642,7 +697,7 @@ label {
     .nav__link:hover, .nav__link--active {
       border-bottom-color: rgba(0, 0, 0, 0.2);
       border-right-color: rgba(0, 0, 0, 0.05);
-      background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%) fixed; }
+      background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, yellow 85%, #48ded4 95%) fixed; }
       .nav__link:hover svg, .nav__link--active svg {
         -ms-transform: scale(1.2);
             transform: scale(1.2); }
@@ -773,7 +828,6 @@ label {
     width: 100%;
     top: 0;
     right: 0;
-    background: linear-gradient(45deg, #05b3d6 0%, rgba(5, 179, 214, 0) 70%), linear-gradient(135deg, #0958ec 10%, rgba(9, 88, 236, 0) 80%), linear-gradient(225deg, #d209ec 10%, rgba(210, 9, 236, 0) 80%), linear-gradient(315deg, #05e129 100%, rgba(5, 225, 41, 0) 70%);
     opacity: 0.6;
     z-index: 1;
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
@@ -786,6 +840,7 @@ label {
     position: absolute;
     left: 0;
     object-fit: cover;
+    filter: grayscale(90%);
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%); }
 
@@ -819,9 +874,9 @@ label {
         background: #e6e6e6;
         padding: 1rem 1rem 1rem 4rem; }
       .tag__choice input:checked + label {
-        background: #FFC40E; }
+        background: yellow; }
   .tag__link {
-    background: #FFC40E;
+    background: yellow;
     color: #303030;
     display: -ms-flexbox;
     display: flex;
@@ -863,11 +918,14 @@ label {
     width: 100%;
     top: 0;
     right: 0;
-    background: linear-gradient(45deg, #05b3d6 0%, rgba(5, 179, 214, 0) 70%), linear-gradient(135deg, #0958ec 10%, rgba(9, 88, 236, 0) 80%), linear-gradient(225deg, #d209ec 10%, rgba(210, 9, 236, 0) 80%), linear-gradient(315deg, #05e129 100%, rgba(5, 225, 41, 0) 70%);
     opacity: 0.6;
     z-index: 1;
     -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2vw), 0% 100%);
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2vw), 0% 100%); }
+
+.single__summary {
+  font-size: 2rem;
+  padding: 2rem 0; }
 
 .single__image {
   width: 100%;
@@ -875,7 +933,8 @@ label {
   top: 0;
   left: 0;
   object-fit: cover;
-  position: absolute; }
+  position: absolute;
+  filter: grayscale(90%); }
 
 .single__details {
   background: white;
@@ -892,12 +951,12 @@ label {
 
 .single__location {
   margin: 0;
-  margin-top: -3rem;
-  margin-right: -5rem;
+  margin-top: -2rem;
+  margin-right: -3rem;
   background: #303030;
-  color: white;
-  display: inline-block;
+  color: yellow;
   float: right;
+  text-align: right;
   position: relative;
   padding: 1rem; }
   @media all and (max-width: 850px) {
@@ -955,7 +1014,7 @@ label {
     left: 0;
     content: '';
     display: block;
-    background: linear-gradient(0, #48ded4 0%, #a026bf 20%, #e82c75 60%, #FFC40E 85%, #48ded4 95%);
+    background: linear-gradient(0, #48ded4 0%, #a026bf 20%, #e82c75 60%, yellow 85%, #48ded4 95%);
     position: absolute;
     height: 100%;
     background-attachment: fixed; }
@@ -988,11 +1047,13 @@ label {
     font-size: 1.2rem;
     color: #999999; }
   .review__stars {
-    color: #FFC40E; }
+    color: yellow;
+    font-size: 2em; }
   .review__body {
     padding: 2rem; }
   .review p {
-    white-space: pre-wrap; }
+    white-space: pre-wrap;
+    font-style: italic; }
 
 /*
   Reviewer Form
@@ -1009,7 +1070,7 @@ label {
     .reviewer__stars input {
       display: none; }
       .reviewer__stars input:checked ~ label {
-        color: #FFC40E; }
+        color: yellow; }
       .reviewer__stars input + label {
         font-size: 0;
         /* These are in the opposite DOM order
@@ -1035,7 +1096,7 @@ label {
           -ms-flex-order: 1;
               order: 1; }
         .reviewer__stars input + label:hover, .reviewer__stars input + label:hover ~ label {
-          color: #ffdd74; }
+          color: #ffff66; }
   .reviewer textarea {
     border: 0;
     outline: 0;
@@ -1102,7 +1163,7 @@ label {
 
 .button {
   border: 0;
-  background: #FFC40E;
+  background: yellow;
   color: #303030;
   font-family: 'Panama';
   font-weight: 600; }

@@ -3,16 +3,17 @@ html
   head
     title= `${title} | ${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
-    link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
+    link(rel="shortcut icon" type="image/png" href="/images/icons/myaddresses.png")
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
     block header
       header.top
+        h1 My Addresses
         nav.nav
           .nav__section.nav__section--pages
             li.nav__item
-              a.nav__link.nav__link--logo(href="/")
-                != h.icon('logo')
+              //- a.nav__link.nav__link--logo(href="/")
+                //- != h.icon('logo')
             each item in h.menu
               li.nav__item
                 a.nav__link(href=item.slug, class=(currentPath.startsWith(item.slug) ? 'nav__link--active' : ''))
@@ -30,6 +31,9 @@ html
               li.nav__item: a.nav__link(href="/logout", class=(currentPath.startsWith('/logout') ? 'nav__link--active' : ''))
                 != h.icon('logout')
                 span Logout
+              li.nav__item: a.nav__link(href="/admin", class=(currentPath.startsWith('/admin') ? 'nav__link--active' : ''))
+                != h.icon('admin')
+                span Admin
               li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
                 //- img.avatar(src=user.gravatar + 'd=retro')
                 img.avatar(src=`/uploads/gravatar/${user.gravatars || 'avatar.svg' }`)
@@ -50,6 +54,13 @@ html
                   button.flash__remove(onClick="this.parentElement.remove()") &times;
     .content
       block content
+
+    .footer
+      ul.footer__info
+        each item in h.footermenu
+          li.footer__info--details
+            a(href=item.slug, class=(currentPath.startsWith(item.slug) ? 'footer__link--active' : ''))
+                span #{item.title}
 
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

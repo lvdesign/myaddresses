@@ -14,7 +14,7 @@ block content
   .single__details.inner
     img.single__map(src=h.staticMap(store.location.coordinates))
     p.single__location= store.location.address
-    p= store.description
+    p.single__summary= store.description
 
     if store.tags
       ul.tags
@@ -24,7 +24,7 @@ block content
               span.tag__text  ##{tag}
     
     p 👍 Pour laisser un message 
-      a(href=`/login/`) connectez vous! 
+      a.special(href=`/login/`) connectez vous! 
 
     if user
       +reviewForm(store)

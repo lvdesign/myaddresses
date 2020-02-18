@@ -47,11 +47,13 @@
   }
   &__stars {
     color: $yellow;
+    font-size: 2em;
   }
   &__body {
     padding: 2rem;
   }
   p {
-    white-space:pre-wrap;
+    white-space:pre-wrap;    
+    font-style: italic;
   }
 }

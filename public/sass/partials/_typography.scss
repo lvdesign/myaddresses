@@ -1,14 +1,14 @@
 @font-face {
-    font-family: 'panama';
-    src: url('/fonts/panama-bold-webfont.woff2') format('woff2'),
-         url('/fonts/panama-bold-webfont.woff') format('woff');
+    font-family: 'league_spartanbold';
+    src:url('/fonts/leaguespartan-bold-webfont.woff2') format('woff2'),
+    url('/fonts/leaguespartan-bold-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
 }
 
 html {
-  font-size:10px;
+  font-size:10px; /*10px*/
 }
 
 body {
@@ -16,20 +16,30 @@ body {
   color:$black;
 }
 
+header.top {
+  background-color: $black;
+  color: $yellow;  
+    h1{
+    text-align: center;
+    margin:0 auto;
+    padding-top: .2em; 
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-size: 5rem;
-  font-family: 'Panama';
+  font-family: 'league_spartanbold';
   font-weight: 600;
-  letter-spacing:-1px;
+  letter-spacing:-1px;  
 }
 
 a {
   text-decoration: none;
-  color:$black;
+  color:yellow;
 }
 
 p a {
-  border-bottom: 2px solid $yellow;
+  border-bottom: 2px solid black;
 }
 
 p {
@@ -42,10 +52,12 @@ p {
   position: relative;
   z-index: 2;
   margin:0;
-  font-size: 40px;
+  font-size: 25px;
   z-index: 2;
   line-height:1.1;
   transform: skew(0, -3deg);
+  
+
   &--long {
     font-size: 30px;
   }
@@ -65,14 +77,22 @@ p {
   // inline link inside
   a {
     border-bottom: 0;
-    $yellowa: rgba($yellow,0.8);
+    $yellowa: rgba(black,0.8);
     background-image: linear-gradient(to right, $yellowa 100%, $yellowa 50%);
+    padding:0 .5em;
   }
 }
 
 .title--single {
   max-width: 600px;
   margin-top: -9rem;
-  font-size: 10rem;
+  font-size: 6rem;  
   text-align: center;
+}
+;
+a.special{color:$black}
+a.special:hover{
+  color:$black;
+  background:$yellow;
+  text-decoration: none;
 }

@@ -14,7 +14,8 @@ router.get('/admin',
     authController.isLoggedIn, 
     catchErrors( storeController.getAdminStores) );
 
-
+// About
+router.get('/about', storeController.aboutPage);
 
 // Home
 router.get('/', catchErrors( storeController.getStores) );

@@ -21,11 +21,22 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 exports.siteName = `My Addresses!`;
 
 exports.menu = [
-  { slug: '/stores', title: 'Stores', icon: 'store', },
-  { slug: '/tags', title: 'Tags', icon: 'tag', },
-  { slug: '/categories', title: 'Categories', icon: 'tag', },
-  { slug: '/top', title: 'Top', icon: 'top', },
-  { slug: '/add', title: 'Add', icon: 'add', },
-  { slug: '/map', title: 'Map', icon: 'map', },
-  { slug: '/admin', title: 'Admin', icon: 'tag', },
-];
+  { slug: '/stores', title: 'Addresses', icon: 'addressbook', },
+  { slug: '/top', title: 'Best', icon: 'top', },
+  { slug: '/categories', title: 'Categories', icon: 'categorie', },
+  { slug: '/tags', title: 'Tags', icon: 'tag', },  
+  { slug: '/add', title: 'Ajouter', icon: 'add', },
+  { slug: '/map', title: 'Carte', icon: 'map', }
+]
+
+exports.footermenu = [
+  { slug: '/about', title: 'About', icon: '', },
+  { slug: '/stores', title: 'Addresses', icon: '', },
+  { slug: '/top', title: 'Best', icon: '', },
+  { slug: '/categories', title: 'Categories', icon: '', },
+  { slug: '/tags', title: 'Tags', icon: '', },  
+  { slug: '/add', title: 'Ajouter', icon: '', },
+  { slug: '/map', title: 'Carte', icon: '', },
+  { slug: '/login', title: 'Login', icon: '' }
+
+]

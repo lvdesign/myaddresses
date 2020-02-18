@@ -21,6 +21,10 @@ const multerOptions={
 exports.homePage = (req,res) =>{
     res.render('index');
 };
+//
+exports.aboutPage = (req,res) =>{
+    res.render('about', {title: 'About My addreses'});
+};
 
 // Admin 
 
@@ -29,20 +33,18 @@ exports.homePage = (req,res) =>{
 exports.getAdminStores = async (req,res) => {
     const stores = await Store.find({ author: { $in: req.user._id}})
     .populate('author'); // get data
-    //res.json(stores);
-   
+    //res.json(stores);   
     res.render('admin', { title: 'Admin', stores }); // render data
 };
 
 // Add Page
 exports.addStore = (req,res) =>{
-    res.render('editStore', { title: 'Add Store'});
+    res.render('editStore', { title: 'Ajouter votre adresse'});
 };
 
 
 // Upload Image
 exports.upload = multer(multerOptions).single('photo');
-
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
         next();
@@ -57,6 +59,7 @@ exports.resize = async (req,res,next) => {
     next();
 }
 
+
 // Create with catchErrors(fn)
 exports.createStore = async (req,res) =>{
     req.body.author = req.user._id;
@@ -68,22 +71,19 @@ exports.createStore = async (req,res) =>{
 };
 
 
-// Addresses 
+// Retrouver toutes les addreses
 exports.getStores = async (req,res) => {
     const page = req.params.page || 1;
     const limit= 4;
     const skip= (page *limit) - limit;
-
     const storesPromise = Store
     .find()
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' })
     ; // get data
-
     // count nb stores in DB
     const countPromise = Store.count();
-
     const[ stores,count ] = await Promise.all([storesPromise,countPromise]);
 
     const pages = Math.ceil(count / limit); // over count with ceil
@@ -92,8 +92,7 @@ exports.getStores = async (req,res) => {
         res.redirect(`/stores/page/${pages}`);
         return;
     }
-
-    res.render('stores', { title: 'Addresses', stores, count, pages, page }); // render data
+    res.render('stores', { title: 'Toutes les adresses', stores, count, pages, page }); // render data
 };
 
 // Middleware pour controler le createur d'une adresse
@@ -111,7 +110,7 @@ exports.editStore = async (req,res) => {
     //res.json(store);
     // confirm user
     confirmOwner(store, req.user);
-    res.render('editStore', { title: `Edit ${store.name}`, store});
+    res.render('editStore', { title: `Editez votre ${store.name}`, store});
 };
 
 // Update Addresses  page
@@ -126,7 +125,7 @@ exports.updateStore = async (req,res) => {
             new: true,
             runValidators: true
         }).exec();
-    req.flash('success', `Successfully Updated your ${store.name}. <a href="/store/${store.slug}">View Store</a> `);
+    req.flash('success', `Successfully Updated your ${store.name}. <a href="/store/${store.slug}">Visualiez l'adresse…</a> `);
     res.redirect(`/stores/${store._id}/edit`);
 };
 
@@ -148,7 +147,6 @@ exports.getStoreBySlug = async (req,res, next) => {
 exports.getStoresByTag = async (req,res) => {
     const tag = req.params.tag;
     const tagQuery = tag || { $exists: true }; //
-
     const tagsPromise = Store.getTagsList();
     const storesPromise = Store.find({ tags: tagQuery });
     const [tags,stores] = await Promise.all([tagsPromise,storesPromise]);
@@ -157,13 +155,10 @@ exports.getStoresByTag = async (req,res) => {
     res.render('tags', { tags: tags , title: 'Tags', tag, stores}) ;
 };
 
-
-
 // GET Categories page
 exports.getStoresByCat = async (req,res) => {
     const categorie = req.params.categorie;
     const categorieQuery = categorie || {$exists:true};
-
     const categoriesPromise = Store.getCatsList();
     const storesPromise = Store.find({ categories: categorieQuery });
     const [categories, stores] = await Promise.all([categoriesPromise,storesPromise]);
