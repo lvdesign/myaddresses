@@ -14,7 +14,7 @@ block content
                 tr
                     td
                         a(href=`/store/${store.slug}`)
-                            img(width=200 src=`/uploads/${store.photo ||'store.png' }`)
+                            img.top__img(src=`/uploads/${store.photo ||'store.png' }`)
                     td #{i +1}
                     td
                         a.special(href=`/store/${store.slug}`)= store.name 

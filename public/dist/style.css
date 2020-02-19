@@ -46,7 +46,8 @@ body {
 
 .inner {
   max-width: 900px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding-bottom: 2rem; }
   @media all and (max-width: 900px) {
     .inner {
       padding: 2rem; } }
@@ -549,7 +550,8 @@ a.special {
 a.special:hover {
   color: #303030;
   background: yellow;
-  text-decoration: none; }
+  text-decoration: none;
+  padding: .5em .8em; }
 
 input, textarea {
   width: 100%;
@@ -766,6 +768,10 @@ label {
     background: #303030;
     color: white; }
 
+.top__img {
+  filter: grayscale(100%);
+  width: 200px; }
+
 .stores {
   display: -ms-flexbox;
   display: flex;
@@ -785,12 +791,18 @@ label {
     .store__details p {
       line-height: 1.2;
       margin-bottom: 0; }
+      .store__details p.categories {
+        font-weight: bolder;
+        text-transform: uppercase; }
   @media all and (max-width: 850px) {
     .store {
       width: calc(50% - 1.25em); } }
   @media all and (max-width: 550px) {
     .store {
       width: 100%; } }
+
+.store:hover {
+  box-shadow: 0 0 0 0.25rem; }
 
 .store__actions {
   position: relative;
@@ -819,7 +831,7 @@ label {
 .store__hero {
   position: relative;
   padding: 0 10px 0 10px;
-  text-align: right; }
+  text-align: center; }
   .store__hero:before {
     display: block;
     content: '';
@@ -949,14 +961,18 @@ label {
   margin-top: -3rem;
   margin-left: -3rem; }
 
+.single__categories {
+  font-weight: bolder;
+  text-transform: uppercase; }
+
 .single__location {
   margin: 0;
   margin-top: -2rem;
   margin-right: -3rem;
   background: #303030;
   color: yellow;
+  display: inline-block;
   float: right;
-  text-align: right;
   position: relative;
   padding: 1rem; }
   @media all and (max-width: 850px) {
@@ -1120,10 +1136,9 @@ label {
   display: flex;
   -ms-flex-align: center;
       align-items: center;
-  background: white;
+  background: inherit;
   margin-top: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05); }
+  margin-bottom: 2rem; }
   .pagination__next {
     -ms-flex: 0 0 auto;
         flex: 0 0 auto;

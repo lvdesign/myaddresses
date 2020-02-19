@@ -89,10 +89,13 @@ p {
   font-size: 6rem;  
   text-align: center;
 }
-;
+
+
 a.special{color:$black}
+
 a.special:hover{
   color:$black;
   background:$yellow;
   text-decoration: none;
+  padding:.5em .8em;
 }

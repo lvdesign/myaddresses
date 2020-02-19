@@ -15,8 +15,6 @@
       width: 100%;
       top: 0;
       right: 0;
-      
-      
       opacity: 0.6;
       z-index: 1;
       clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2vw), 0% 100%);
@@ -50,14 +48,18 @@
     margin-top: -3rem;
     margin-left: -3rem;
   }
+  &__categories {
+    font-weight:bolder;
+    text-transform: uppercase;
+  } 
   &__location {
     margin: 0;
     margin-top: -2rem;
     margin-right: -3rem;
     background: $black;
     color: $yellow;
-    float: right;
-    text-align: right;
+    display: inline-block;
+    float: right;    
     position: relative;
     padding: 1rem;
 

@@ -31,7 +31,7 @@ exports.aboutPage = (req,res) =>{
 // user id  =  author
 // stores dont le author = user_ ID
 exports.getAdminStores = async (req,res) => {
-    const stores = await Store.find({ author: { $in: req.user._id}})
+    const stores = await Store.find()
     .populate('author'); // get data
     //res.json(stores);   
     res.render('admin', { title: 'Admin', stores }); // render data
@@ -78,13 +78,14 @@ exports.getStores = async (req,res) => {
     const skip= (page *limit) - limit;
     const storesPromise = Store
     .find()
+    .populate('author')
     .skip(skip)
     .limit(limit)
     .sort({ created: 'desc' })
     ; // get data
     // count nb stores in DB
     const countPromise = Store.count();
-    const[ stores,count ] = await Promise.all([storesPromise,countPromise]);
+    const[ stores, count ] = await Promise.all([storesPromise,countPromise]);
 
     const pages = Math.ceil(count / limit); // over count with ceil
     if(!stores.length && skip){

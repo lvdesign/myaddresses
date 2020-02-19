@@ -6,7 +6,10 @@ include mixins/_pagination
 block content
     .inner
         h2= title
+        +pagination(page, pages, count)
+
         .stores 
             each store in stores
                 +storeCard(store)
+                
         +pagination(page, pages, count)

@@ -146,6 +146,7 @@ storeSchema.pre('find', autopopulate);
 storeSchema.pre('findOne', autopopulate);
 
 
+
 module.exports = mongoose.model('Store', storeSchema);
 
 // categories:[{type: Schema.Types.ObjectId, ref: 'Categories'}]

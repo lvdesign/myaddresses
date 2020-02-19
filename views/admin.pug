@@ -4,10 +4,10 @@ extends layout
 block content
     .inner
         h2= title 
-            
+            //- pre=h.dump(stores)
             each store in stores
                 p
-                    a(href=`/store/${store.slug}`) #{store.name} 
+                    a.special(href=`/store/${store.slug}`) #{store.name} 
                         span  de ##{store.author.name}    
             
         
