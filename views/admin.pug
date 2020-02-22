@@ -3,11 +3,24 @@ extends layout
 
 block content
     .inner
-        h2= title 
-            //- pre=h.dump(stores)
+        h2= title  
+            //- pre=h.dump(stores) a(href=`/stores/${store._id}/edit`) 
+        ul
             each store in stores
-                p
+                li
                     a.special(href=`/store/${store.slug}`) #{store.name} 
-                        span  de ##{store.author.name}    
+                            span  de ##{store.author.name} 
+                    p= store.created
+                    form.form(action=`/admin/remove/${store._id}` method="POST")
+                        label(for="id") #{store.name} 
+                        input(type="hidden" name="_id" value=store._id) 
+                        input.button(type="submit" value="Delete")
+
+
+
+
+                        
+                        
+
             
         

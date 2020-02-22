@@ -6,7 +6,7 @@ import dompurify from 'dompurify';
 function searchResultsHTML(stores){
     return stores.map(store => {
         return `
-        <a href="/store/${store.slug}" class="search__result">
+        <a href="/store/${store.slug}" class="search__result special--search">
         <strong>${store.name}</strong>
         </a>
         `;

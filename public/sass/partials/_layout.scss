@@ -12,6 +12,13 @@ body {
     height: 10px;
     width: 100%;
   }
+  &:after{
+    content: '';
+    display: block;
+    background: $grad;
+    height: 10px;
+    width: 100%;
+  }
 }
 
 .inner {

@@ -27,7 +27,6 @@ exports.aboutPage = (req,res) =>{
 };
 
 // Admin 
-
 // user id  =  author
 // stores dont le author = user_ ID
 exports.getAdminStores = async (req,res) => {
@@ -69,6 +68,7 @@ exports.createStore = async (req,res) =>{
     res.redirect(`/store/${store.slug}`);
     //res.json(req.body);
 };
+
 
 
 // Retrouver toutes les addreses
@@ -131,6 +131,14 @@ exports.updateStore = async (req,res) => {
 };
 
 // Delete Address
+exports.removeStore = async(req,res) => {
+    const store = await Store.findByIdAndRemove(
+       { _id: req.params.id},
+    )
+    console.log('ok', store);
+    req.flash('success', `Successfully Remove your store. `);
+    res.redirect(`/admin`);
+}
 
 
 // GET Store by Slug(titre) 
@@ -149,7 +157,8 @@ exports.getStoresByTag = async (req,res) => {
     const tag = req.params.tag;
     const tagQuery = tag || { $exists: true }; //
     const tagsPromise = Store.getTagsList();
-    const storesPromise = Store.find({ tags: tagQuery });
+    const storesPromise = Store.find({ tags: tagQuery })
+        .populate('author');
     const [tags,stores] = await Promise.all([tagsPromise,storesPromise]);
 //res.json(result); destructure
     //var tags = result[0]; var stores = result[1];

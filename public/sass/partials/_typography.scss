@@ -90,12 +90,21 @@ p {
   text-align: center;
 }
 
+.txtbolder{
+  font-weight: bolder;
+}
 
 a.special{color:$black}
-
 a.special:hover{
   color:$black;
   background:$yellow;
   text-decoration: none;
-  padding:.5em .8em;
+  padding:.5em 0;
+}
+
+a.special--search{color:$black}
+a.special--search:hover{
+  color:$black;
+  background:$yellow;
+  text-decoration: none;
 }

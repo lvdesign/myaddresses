@@ -14,6 +14,10 @@ router.get('/admin',
     authController.isLoggedIn, 
     catchErrors( storeController.getAdminStores) );
 
+router.post('/admin/remove/:id',
+    authController.isLoggedIn, 
+    catchErrors( storeController.removeStore)
+)
 // About
 router.get('/about', storeController.aboutPage);
 
