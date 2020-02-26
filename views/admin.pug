@@ -1,20 +1,19 @@
 extends layout
 
+include mixins/_adminCard
+
 
 block content
     .inner
-        h2= title  
-            //- pre=h.dump(stores) a(href=`/stores/${store._id}/edit`) 
-        ul
-            each store in stores
-                li
-                    a.special(href=`/store/${store.slug}`) #{store.name} 
-                            span  de ##{store.author.name} 
-                    p= store.created
-                    form.form(action=`/admin/remove/${store._id}` method="POST")
-                        label(for="id") #{store.name} 
-                        input(type="hidden" name="_id" value=store._id) 
-                        input.button(type="submit" value="Delete")
+        h2 #{title} : gérez vos adresses
+
+            +adminCard(store)
+
+
+
+            //- pre= h.dump(user) 
+            //- if user && store.author.equals(user._id) 
+       
 
 
 

@@ -773,6 +773,40 @@ label {
     content: '\2665\FE0F';
     margin-right: 1rem; } }
 
+.nav__section--pages {
+  border: 2px dotted red;
+  width: 100%; }
+
+.nav__section--user {
+  border: 2px dotted green;
+  width: 100%; }
+
+.nav__section--search {
+  border: 2px dotted blue;
+  width: 100%; }
+
+.top h1 {
+  border: 2px dotted yellow;
+  max-width: 100%; }
+
+.mygrid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto auto;
+      grid-template-columns: auto auto auto;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  grid-template-areas: "pages search user"; }
+
+.nav__section--search {
+  grid-area: search; }
+
+.nav__section--user {
+  grid-area: user; }
+
+.nav__section--pages {
+  grid-area: pages; }
+
 .table {
   width: 100%; }
   .table td {
@@ -1219,5 +1253,66 @@ pre.error {
   background: white;
   line-height: 3;
   white-space: pre-line; }
+
+ul.adview {
+  margin: 0;
+  padding: 0;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr,1fr,1fr;
+      grid-template-columns: 1fr,1fr,1fr;
+  grid-template-areas: ". . . ";
+  grid-gap: 10px 10px; }
+
+/* basic */
+@media (max-width: 765px) {
+  ul.adview {
+    margin: 0;
+    padding: 0;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr, 1fr;
+        grid-template-columns: 1fr, 1fr;
+    grid-template-areas: ". .";
+    grid-gap: 0px 0px; } }
+
+@media (max-width: 370px) {
+  ul.adview {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    grid-template-areas: ". .";
+    grid-gap: 0px 0px; } }
+
+li.ad {
+  padding: 1rem;
+  list-style: none;
+  border: 1px gray solid;
+  background: white; }
+
+li > h5 {
+  margin: 0;
+  padding: 0; }
+
+a.admin {
+  color: black;
+  background-color: none;
+  text-decoration: underline; }
+
+a.admin:hover {
+  background-color: none;
+  text-decoration: none; }
+
+.admin-text {
+  font-weight: bolder; }
+
+.button.top {
+  cursor: pointer; }
+
+.button.top:hover {
+  background-color: white;
+  text-decoration: underline; }
+
+.form-new label {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map*/

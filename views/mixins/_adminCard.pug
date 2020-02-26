@@ -1,0 +1,21 @@
+mixin adminCard(store={})    
+  
+    h3= user.name 
+
+    ul.adview
+        each store in stores
+
+            li.ad
+                h5  
+                    a.admin(href=`/store/${store.slug}`) #{store.name}
+                    p
+                        em  ( #{h.moment(store.created).format("LL")} ) 
+
+                
+                a.admin(href=`/stores/${store._id}/edit`) 
+                    p.admin-text Mettre à jour votre adresse   
+
+                form.form-new(action=`/admin/remove/${store._id}` method="POST")
+                    label(for="id") #{store.name} 
+                    input(type="hidden" name="_id" value=store._id) 
+                    input.button.top(type="submit" value="Delete")

@@ -125,3 +125,40 @@
     margin-right: 1rem;
   }
 }
+
+.nav__section--pages{
+  border:2px dotted red;
+  width: 100%;
+}
+.nav__section--user{
+  border:2px dotted green;
+  width: 100%;
+
+}
+.nav__section--search{
+  border:2px dotted blue;
+  width: 100%;
+  }
+
+.top h1{
+  border:2px dotted yellow;
+  max-width: 100%;
+}
+
+.mygrid{
+  display:grid; 
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  "pages search user"
+ ;
+}
+.nav__section--search {
+  grid-area: search;
+}
+.nav__section--user {
+  grid-area: user;
+}
+.nav__section--pages{
+  grid-area: pages;
+}

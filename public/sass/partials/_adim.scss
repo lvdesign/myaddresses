@@ -1,0 +1,67 @@
+
+ul.adview{
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr,1fr,1fr ;    
+    grid-template-areas: ". . . " ;
+    grid-gap: 10px 10px;    
+}
+
+/* basic */
+@media (max-width: 765px) {
+    ul.adview {
+        margin: 0;
+    padding: 0;
+    display: grid;
+        grid-template-columns: 1fr, 1fr ;    
+        grid-template-areas: ". .";
+        grid-gap: 0px 0px;         
+    }
+  }
+@media (max-width: 370px) {
+    ul.adview {
+    grid-template-columns: 1fr;    
+    grid-template-areas: ". .";
+    grid-gap: 0px 0px; 
+    }
+  }
+
+
+li.ad{
+padding:1rem;    
+list-style: none;
+border:1px gray solid;
+background: white;
+
+}
+
+li > h5{
+    margin: 0;
+    padding: 0;
+}
+
+a.admin{
+    color:black;
+    background-color: none;
+    text-decoration: underline;
+}
+a.admin:hover{
+    background-color: none;
+    text-decoration: none;
+}
+.admin-text{
+    font-weight: bolder;    
+}
+
+.button.top{
+    cursor: pointer;
+}
+.button.top:hover{
+    background-color: white;
+    text-decoration: underline;
+}
+
+.form-new label{
+    display: none;
+}

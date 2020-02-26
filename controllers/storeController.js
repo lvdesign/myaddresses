@@ -27,13 +27,15 @@ exports.aboutPage = (req,res) =>{
 };
 
 // Admin 
-// user id  =  author
+// user id  ==  author => author:req.body.author
 // stores dont le author = user_ ID
-exports.getAdminStores = async (req,res) => {
-    const stores = await Store.find()
-    .populate('author'); // get data
-    //res.json(stores);   
-    res.render('admin', { title: 'Admin', stores }); // render data
+exports.getAdminStores = async (req,res) => {    
+    req.body.author = req.user._id;
+    const stores = await Store.find({ author:req.body.author})
+    .populate('author')
+    ; 
+    // get data .populate('author')
+    res.render('admin', { title: 'Admin', stores }); 
 };
 
 // Add Page
@@ -102,6 +104,8 @@ const confirmOwner = (store, user) => {
         throw Error('Oops, vous ne pouvez éditer que vos adresses!');
     }
 };
+
+
 
 
 // Addresses  edit
