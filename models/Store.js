@@ -14,8 +14,16 @@ const storeSchema = new mongoose.Schema({
         type:String,
         trim: true,        
     },
-    tags:[String],    
+    tags:[String],
     
+    categories:{
+        type:String,
+        trim: true,
+    },
+    private:{
+        type:Boolean,
+        default:false
+    },     
     created:{
         type: Date,
         default: Date.now

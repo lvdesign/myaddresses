@@ -27,7 +27,7 @@ mixin storeCard(store={})
             h2.title
                 a(href=`/store/${store.slug}`) #{store.name}
         .store__details
-            p.categories Cat
+            p.categories= store.categories
             p Par #{store.author.name}
                  em  ( #{h.moment(store.created).format("LL")} )
         

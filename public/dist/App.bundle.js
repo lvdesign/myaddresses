@@ -1058,7 +1058,7 @@ function loadPlaces(map) {
             alert('No places');
             return;
         }
-        //console.log(places);
+        console.log(places);
         // Bounds
         var bounds = new google.maps.LatLngBounds();
         // Infos
@@ -1081,7 +1081,7 @@ function loadPlaces(map) {
         markers.forEach(function (marker) {
             return marker.addListener('click', function () {
                 //console.log(this.place);
-                var html = '\n          <div class="popup">\n            <a href="/store/' + this.place.slug + '">\n              <img src="/uploads/' + (this.place.photo || 'store.png') + '" alt="' + this.place.name + '" />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
+                var html = '\n          <div class="popup">\n            <a class="special" href="/store/' + this.place.slug + '">\n              <img src="/uploads/' + (this.place.photo || 'store.png') + '" alt="' + this.place.name + '" />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
                 infoWindow.setContent(html);
                 infoWindow.open(map, this);
             });

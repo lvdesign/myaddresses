@@ -14,7 +14,9 @@ block content
   .single__details.inner
     img.single__map(src=h.staticMap(store.location.coordinates))
     p.single__location= store.location.address
-    p.single__categories Categorie
+    a.cat__link(href=`/categories/${categories}`)
+      p.single__categories= store.categories
+
     p.single__summary= store.description
 
     if store.tags

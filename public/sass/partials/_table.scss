@@ -1,20 +1,32 @@
 .table {
   width: 100%;
-  td {
+  table-layout: fixed;
+  border-spacing: 1px;
+
+  td.txt {
     padding: 5px;
+    font-size: 2rem;
   }
   tr:nth-child(even) {
     background: white;
   }
-  tr:nth-child(odd):not(:first-child) {
-    background: #f7f7f7;
+  tr:nth-child(odd) {
+    background: #ccc;
   }
-  thead tr {
-    background: $black;
+
+  thead.thead tr{
+    background-color: black;
     color: white;
+    text-transform: uppercase;
+    
   }
 }
+
+.responsiveTable{
+  overflow-x:auto;
+}
+
 .top__img{
   filter:grayscale(100%);
-  width:200px;
+  width:100px;
 }

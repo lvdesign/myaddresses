@@ -3,21 +3,23 @@ extends layout
 block content
     .inner  
         h2 Top #{stores.length} Stores
-        table.table
-            thead
-                td photo
-                td ranking
-                td name
-                td reviews
-                td Average Rating
-            each store,i in stores
-                tr
-                    td
-                        a(href=`/store/${store.slug}`)
-                            img.top__img(src=`/uploads/${store.photo ||'store.png' }`)
-                    td #{i +1}
-                    td
-                        a.special(href=`/store/${store.slug}`)= store.name 
-                    td= store.reviews.length
-                    td #{Math.round(store.averageRating *10)/ 10} /5
+        .responsiveTable
+            table.table
+                thead.thead
+                    tr
+                        td photo
+                        td ranking
+                        td name
+                        td reviews
+                        td Average Rating
+                each store,i in stores
+                    tr
+                        td.txt
+                            a(href=`/store/${store.slug}`)
+                                img.top__img(src=`/uploads/${store.photo ||'store.png' }`)
+                        td.txt #{i +1}
+                        td.txt
+                            a.special(href=`/store/${store.slug}`)= store.name 
+                        td.txt= store.reviews.length
+                        td.txt #{Math.round(store.averageRating *10)/ 10} /5
         

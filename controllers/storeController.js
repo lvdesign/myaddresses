@@ -139,7 +139,7 @@ exports.removeStore = async(req,res) => {
     const store = await Store.findByIdAndRemove(
        { _id: req.params.id},
     )
-    console.log('ok', store);
+    console.log('ok', store);    
     req.flash('success', `Successfully Remove your store. `);
     res.redirect(`/admin`);
 }
