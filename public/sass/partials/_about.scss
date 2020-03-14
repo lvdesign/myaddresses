@@ -1,0 +1,32 @@
+
+.about{
+    display:flex;
+    flex-wrap:wrap;
+    margin: -1.25em 0 0 -1.25em; 
+
+
+
+    
+  
+}
+h5{
+    margin:6rem 0 2rem 0;
+}
+
+
+ul{
+    list-style:none;
+    line-height: 2;
+    font-size: 1.6rem;
+    padding-left:0;
+}
+li{
+    padding-left:2rem;
+    font-weight:normal;
+    &.infos-plus{
+        font-weight:bolder;
+        padding-left:0;
+        font-size:2rem;
+        margin-top: 2rem;
+    }
+}

@@ -777,19 +777,15 @@ label {
     margin-right: 1rem; } }
 
 .nav__section--pages {
-  border: 2px dotted red;
   width: 100%; }
 
 .nav__section--user {
-  border: 2px dotted green;
   width: 100%; }
 
 .nav__section--search {
-  border: 2px dotted blue;
   width: 100%; }
 
 .top h1 {
-  border: 2px dotted yellow;
   max-width: 100%; }
 
 .mygrid {
@@ -1375,5 +1371,30 @@ a.admin:hover {
 
 .form-new label {
   display: none; }
+
+.about {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: -1.25em 0 0 -1.25em; }
+
+h5 {
+  margin: 6rem 0 2rem 0; }
+
+ul {
+  list-style: none;
+  line-height: 2;
+  font-size: 1.6rem;
+  padding-left: 0; }
+
+li {
+  padding-left: 2rem;
+  font-weight: normal; }
+  li.infos-plus {
+    font-weight: bolder;
+    padding-left: 0;
+    font-size: 2rem;
+    margin-top: 2rem; }
 
 /*# sourceMappingURL=style.css.map*/
