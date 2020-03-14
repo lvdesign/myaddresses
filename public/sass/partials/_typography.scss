@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'league_spartanbold';
     src:url('/fonts/leaguespartan-bold-webfont.woff2') format('woff2'),
@@ -107,4 +108,9 @@ a.special--search:hover{
   color:$black;
   background:$yellow;
   text-decoration: none;
+}
+
+.priv{
+  color:red;
+  
 }

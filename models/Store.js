@@ -21,8 +21,8 @@ const storeSchema = new mongoose.Schema({
         trim: true,
     },
     private:{
-        type:Boolean,
-        default:false
+        type: String,
+        default: 'non'
     },     
     created:{
         type: Date,

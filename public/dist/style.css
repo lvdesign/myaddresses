@@ -570,6 +570,9 @@ a.special--search:hover {
   background: yellow;
   text-decoration: none; }
 
+.priv {
+  color: red; }
+
 input, textarea {
   width: 100%;
   padding: 10px;

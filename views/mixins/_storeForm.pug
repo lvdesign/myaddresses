@@ -46,6 +46,16 @@ mixin storeForm(store = {})
                 input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
                 label(for="choice") #{choice}
         
-        
+        //- addresse en privée
+        p
+            em Cette Adresse en privée
+        - const valeur = ['oui', 'non']
+        - const private = store.private || false
+        ul.tags
+            each val in valeur
+             .tag.tag__choice
+                input(type="radio"  id=val value=val  name="private"  checked= (valeur.includes(val))  )           
+                label(for="val") #{val}       
+
 
         input(type="submit" value= "Sauvegardez votre adresse" class="button")
