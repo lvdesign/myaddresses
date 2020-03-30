@@ -144,7 +144,6 @@ storeSchema.index({
 
 
 // Populate
-
 function autopopulate(next){
     this.populate('reviews');
     next();

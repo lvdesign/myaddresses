@@ -32,7 +32,9 @@ exports.isLoggedIn = (req,res,next) => {
   res.redirect('/login');
 };
 
-// Reset PSW
+/** 
+ *  Reset PSW 
+ * */ 
 // 1 forgot create Token/DateExpire
 exports.forgot = async(req,res) => {
   // If user exist

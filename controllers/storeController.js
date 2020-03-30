@@ -17,18 +17,40 @@ const multerOptions={
     }
 };
 
-// Home Page
+
+/* PAGES */
+
+/**
+ *  Home Page
+ */
 exports.homePage = (req,res) =>{
     res.render('index');
 };
-//
+
+/**
+ *  Edit Page
+ */
+exports.editStore = async (req,res) => {
+    // find id
+    const store = await Store.findOne({ _id: req.params.id });
+    //res.json(store);
+    // confirm user
+    confirmOwner(store, req.user);
+    res.render('editStore', { title: `Editez votre ${store.name}`, store});
+};
+
+/**
+ *  About Page
+ */
 exports.aboutPage = (req,res) =>{
     res.render('about', {title: 'About My addreses'});
 };
 
-// Admin 
-// user id  ==  author => author:req.body.author
-// stores dont le author = user_ ID
+/**
+ *  Admin Page
+ *  user id  ==  author => author:req.body.author
+ *  stores dont le author = user_ ID
+ */
 exports.getAdminStores = async (req,res) => {    
     req.body.author = req.user._id;
     const stores = await Store.find({ author:req.body.author})
@@ -38,13 +60,49 @@ exports.getAdminStores = async (req,res) => {
     res.render('admin', { title: 'Admin', stores }); 
 };
 
-// Add Page
+/**
+ *  Add Page
+ */
 exports.addStore = (req,res) =>{
     res.render('editStore', { title: 'Ajouter votre adresse'});
 };
 
+/**
+ * Map Page
+ */
+exports.mapPage= (req,res) => {
+    res.render('map', { title: 'Map'});
+}
 
-// Upload Image
+// Page Hearts 
+// retrouve toutes les stores avec un coeur de l'utilisateur
+exports.getHearts = async (req,res) => {
+    const stores = await Store.find({
+        _id: { $in: req.user.hearts}
+    });
+    //res.json(stores);
+    res.render('stores', { title: 'Hearted Stores', stores})
+};
+
+/**
+ * Top Page
+ * Creation d'une aggregation dans le Model
+ */
+exports.getTopStores = async (req,res) => {
+const stores = await Store.getTopStores();
+//res.json(stores)
+res.render('topStores', { title: 'Top', stores });
+}
+
+
+
+
+
+/**
+ *  Upload Image
+ *  Resize Image
+ *  Register in folder ./public/uploads/
+ */
 exports.upload = multer(multerOptions).single('photo');
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
@@ -61,7 +119,53 @@ exports.resize = async (req,res,next) => {
 }
 
 
-// Create with catchErrors(fn)
+
+/**
+ *  getStores
+ *  Retrouver toutes les addreses 
+ * 
+ * "private": { $in:['true']}"private": { $in:['true']}
+ */
+exports.getStores = async (req,res) => {
+    const page = req.params.page || 1;
+    const limit= 4;
+    const skip= (page *limit) - limit;
+    const storesPromise = Store
+    .find({  })
+    .populate('author')
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' })
+    ; // get data
+    // count nb stores in DB
+    const countPromise = Store.count();
+    const[ stores, count ] = await Promise.all([storesPromise, countPromise]);
+
+    const pages = Math.ceil(count / limit); // over count with ceil
+    if(!stores.length && skip){
+        req.flash('info', `Hey, vous cherchez la page ${page} mais elle n'existe pas. La dernière page est la page ${pages}.`);
+        res.redirect(`/stores/page/${pages}`);
+        return;
+    }
+    res.render('stores', { title: 'Toutes les adresses', stores, count, pages, page }); // render data
+};
+
+/**
+ *  Controler le createur d'une adresse
+ *  Middleware 
+ */
+const confirmOwner = (store, user) => {
+    if(!store.author.equals(user._id)){
+        throw Error('Oops, vous ne pouvez éditer que vos adresses!');
+    }
+};
+
+
+
+/**
+ *  Editer une Adresse POST
+ *  Create with catchErrors(fn)
+ */
 exports.createStore = async (req,res) =>{
     req.body.author = req.user._id;
     const store = await (new Store(req.body)).save(); // creation instantanée
@@ -73,52 +177,10 @@ exports.createStore = async (req,res) =>{
 
 
 
-// Retrouver toutes les addreses
-exports.getStores = async (req,res) => {
-    const page = req.params.page || 1;
-    const limit= 4;
-    const skip= (page *limit) - limit;
-    const storesPromise = Store
-    .find()
-    .populate('author')
-    .skip(skip)
-    .limit(limit)
-    .sort({ created: 'desc' })
-    ; // get data
-    // count nb stores in DB
-    const countPromise = Store.count();
-    const[ stores, count ] = await Promise.all([storesPromise,countPromise]);
 
-    const pages = Math.ceil(count / limit); // over count with ceil
-    if(!stores.length && skip){
-        req.flash('info', `Hey, vous cherchez la page ${page} mais elle n'existe pas. La dernière page est la page ${pages}.`);
-        res.redirect(`/stores/page/${pages}`);
-        return;
-    }
-    res.render('stores', { title: 'Toutes les adresses', stores, count, pages, page }); // render data
-};
-
-// Middleware pour controler le createur d'une adresse
-const confirmOwner = (store, user) => {
-    if(!store.author.equals(user._id)){
-        throw Error('Oops, vous ne pouvez éditer que vos adresses!');
-    }
-};
-
-
-
-
-// Addresses  edit
-exports.editStore = async (req,res) => {
-    // find id
-    const store = await Store.findOne({ _id: req.params.id });
-    //res.json(store);
-    // confirm user
-    confirmOwner(store, req.user);
-    res.render('editStore', { title: `Editez votre ${store.name}`, store});
-};
-
-// Update Addresses  page
+/**
+ *  Addresses  update
+ */
 exports.updateStore = async (req,res) => {
     // set loc
     req.body.location.type = 'Point';
@@ -134,7 +196,9 @@ exports.updateStore = async (req,res) => {
     res.redirect(`/stores/${store._id}/edit`);
 };
 
-// Delete Address
+/**
+ *  Addresses  delete
+ */
 exports.removeStore = async(req,res) => {
     const store = await Store.findByIdAndRemove(
        { _id: req.params.id},
@@ -145,7 +209,9 @@ exports.removeStore = async(req,res) => {
 }
 
 
-// GET Store by Slug(titre) 
+/**
+ *  GET Store Page by Slug(titre) 
+ */
 // ajout de author(User) et de reviews (Review)
 exports.getStoreBySlug = async (req,res, next) => {
     const store = await Store
@@ -155,8 +221,9 @@ exports.getStoreBySlug = async (req,res, next) => {
     res.render('store', { title: store.name, store }); // render data
 };
 
-
-// GET Tags page
+/**
+ * GET Tags Page
+ */
 exports.getStoresByTag = async (req,res) => {
     const tag = req.params.tag;
     const tagQuery = tag || { $exists: true }; //
@@ -169,7 +236,9 @@ exports.getStoresByTag = async (req,res) => {
     res.render('tags', { tags: tags , title: 'Tags', tag, stores}) ;
 };
 
-// GET Categories page
+/**
+ * GET Categories Page
+ */
 exports.getStoresByCat = async (req,res) => {
     const categorie = req.params.categorie;
     const categorieQuery = categorie || {$exists:true};
@@ -180,9 +249,11 @@ exports.getStoresByCat = async (req,res) => {
 };
 
 
-// SEARCH 
-// http://localhost:7777/api/search?q=beer&name=wes
-// mongoose parametres
+/**
+ * SEARCH 
+ * http://localhost:7777/api/search?q=beer&name=wes
+ * mongoose parametres
+ */ 
 exports.searchStores = async (req,res) => {
     const stores = await Store
         .find({
@@ -198,11 +269,12 @@ exports.searchStores = async (req,res) => {
 }
 
 
-// MAP Location lat lng
+/**
+ * MAP Location lat lng
+ */
 exports.mapStores = async (req,res) => {
     //res.json( {it: 'Work'});
     const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
-
     const q = {
         location: {
             $near: {
@@ -220,13 +292,12 @@ exports.mapStores = async (req,res) => {
     res.json(stores);
 }
 
-// Map page
-exports.mapPage= (req,res) => {
-    res.render('map', { title: 'Map'});
-}
 
 
-// Heart toggle methode '$pull' : '$addToSet'
+/**
+ * Heart Page 
+ * toggle methode '$pull' : '$addToSet'
+ */
 exports.heartStore = async(req,res) => {
     const hearts = req.user.hearts.map(obj => obj.toString());
     const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
@@ -238,23 +309,3 @@ exports.heartStore = async(req,res) => {
     //console.log(hearts);
     res.json(user);
 };
-
-// Page Hearts retrouve toutes les stores avec un coeur de l'utilisateur
-exports.getHearts = async (req,res) => {
-    const stores = await Store.find({
-        _id: { $in: req.user.hearts}
-    });
-
-    //res.json(stores);
-    res.render('stores', { title: 'Hearted Stores', stores})
-
-};
-
-
-// Top
-// Creation d'une aggregation dans le Model
-exports.getTopStores = async (req,res) => {
-const stores = await Store.getTopStores();
-//res.json(stores)
-res.render('topStores', { title: 'Top', stores });
-}
