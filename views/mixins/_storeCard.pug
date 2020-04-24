@@ -33,4 +33,4 @@ mixin storeCard(store={})
                     em  ( #{h.moment(store.created).format("LL")} )
             
                 p= store.description.split(' ').slice(0, 25).join(' ')
-                p.priv #{store.private}
+                //- p.priv #{store.private}

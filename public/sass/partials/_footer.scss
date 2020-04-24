@@ -2,7 +2,7 @@
 .footer{
     background-color: black;
     color:white;
-    padding: 2em ;
+    padding: 2em;
     display:flex;
   }
   .footer a{
@@ -23,20 +23,8 @@
     list-style: none;
   }
   .footer__info--details{
-    display: inline;
+    display: inline-block;
     padding: 0}
   
-  
-    @media all and (max-width: 768px) {
-  
-    }
-    @media all and (max-width: 375px) {
-      .footer{
-        display: block;
-      }
-      .footer__info{
-        margin: 2rem 0;
-      }
-  
-    }
+ 
   

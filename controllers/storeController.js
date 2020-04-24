@@ -123,7 +123,7 @@ exports.resize = async (req,res,next) => {
 /**
  *  getStores
  *  Retrouver toutes les addreses 
- * 
+ *  private:{ $in: ['non']}
  * "private": { $in:['true']}"private": { $in:['true']}
  */
 exports.getStores = async (req,res) => {
@@ -131,7 +131,7 @@ exports.getStores = async (req,res) => {
     const limit= 4;
     const skip= (page *limit) - limit;
     const storesPromise = Store
-    .find({  })
+    .find({})
     .populate('author')
     .skip(skip)
     .limit(limit)

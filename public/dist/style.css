@@ -22,14 +22,8 @@
   list-style: none; }
 
 .footer__info--details {
-  display: inline;
+  display: inline-block;
   padding: 0; }
-
-@media all and (max-width: 375px) {
-  .footer {
-    display: block; }
-  .footer__info {
-    margin: 2rem 0; } }
 
 html {
   font-size: 10px; }
@@ -693,7 +687,8 @@ label {
           flex: 1 1 auto; }
   .nav__item {
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    /* flex */ }
   .nav__link {
     background: #303030;
     color: white;
@@ -765,13 +760,18 @@ label {
       .nav__section--user svg {
         display: none; }
   .nav__item {
-    width: 33.333333%; }
+    width: 20%;
+    display: inline-block;
+    margin: 0;
+    padding: 0; }
   .nav__link {
     width: 100%; }
     .nav__link svg {
       max-width: 100%; }
     .nav__link--logo svg {
       width: 100%; }
+    .nav__link span {
+      display: none; }
   .heart-count:before {
     content: '\2665\FE0F';
     margin-right: 1rem; } }
@@ -787,24 +787,6 @@ label {
 
 .top h1 {
   max-width: 100%; }
-
-.mygrid {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: auto auto auto;
-      grid-template-columns: auto auto auto;
-  -ms-grid-rows: auto;
-      grid-template-rows: auto;
-  grid-template-areas: "pages search user"; }
-
-.nav__section--search {
-  grid-area: search; }
-
-.nav__section--user {
-  grid-area: user; }
-
-.nav__section--pages {
-  grid-area: pages; }
 
 .table {
   width: 100%;

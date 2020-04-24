@@ -13,7 +13,9 @@ mixin adminCard(store={})
 
                 
                 a.admin(href=`/stores/${store._id}/edit`) 
-                    p.admin-text Mettre à jour votre adresse   
+                    p.admin-text Mettre à jour votre adresse
+
+                p Adresse privée : #{ store.private} 
 
                 form.form-new(action=`/admin/remove/${store._id}` method="POST")
                     label(for="id") #{store.name} 
