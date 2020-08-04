@@ -5,6 +5,7 @@ const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 
+/*
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
@@ -13,6 +14,7 @@ aws.config.update({
     accessKeyId: AWS_ACCESS_KEY_ID,
     region: 'us-east-1'
 });
+*/
 /*
 AWS_ACCESS_KEY_ID=AKIAJW3FG4B77JXDF7EA
 AWS_SECRET_ACCESS_KEY=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
@@ -26,7 +28,7 @@ mLab en
 us-east-1	USA Est (Virginie du Nord)
 */
 
-s3 = new aws.S3();
+//s3 = new aws.S3();
 
 
 const multerOptions={
@@ -41,7 +43,7 @@ const multerOptions={
     }
 };
 
-
+/*
 const uploadS3 = multer({
     storage: multerS3({
         s3: s3,
@@ -52,7 +54,7 @@ const uploadS3 = multer({
         }
     })
 });
-
+*/
 /* PAGES */
 
 /**
