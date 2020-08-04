@@ -157,7 +157,7 @@ exports.resize = async (req,res,next) => {
     next();
 }
 
-
+/*base direct*/
 
 
 
