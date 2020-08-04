@@ -3,6 +3,7 @@ data/
 .DS_STORE
 *.log
 variables.env
+variables.env.now
 photos/
 
 ##public/uploads/*
