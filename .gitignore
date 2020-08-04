@@ -7,3 +7,4 @@ variables.env.now
 photos/
 
 ##public/uploads/*
+# npm run dev
