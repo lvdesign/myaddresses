@@ -5,6 +5,30 @@ const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3');
+
+aws.config.update({
+    secretAccessKey: 'xVNJ3mhd9/rGoCLmpd5YKrui888fZqVogMJ/ED0o',
+    accessKeyId: 'AKIAJW3FG4B77JXDF7EA',
+    region: 'us-east-1'
+});
+/*
+AWS_ACCESS_KEY_ID=AKIAJW3FG4B77JXDF7EA
+AWS_SECRET_ACCESS_KEY=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
+MY_BUCKET=myaddresses
+us-east-1	USA Est (Virginie du Nord)
+Désactiver le paramètre bloquer tout accès public peut avoir comme conséquence le fait que ce compartiment et les objets qu'il contient deviennent publics.
+USA Est (Virginie du Nord)
+Facultatif	Non
+
+mLab en 
+us-east-1	USA Est (Virginie du Nord)
+*/
+
+s3 = new aws.S3();
+
+
 const multerOptions={
     storage: multer.memoryStorage(),
     fileFilter(req,file,next){
@@ -17,6 +41,17 @@ const multerOptions={
     }
 };
 
+
+const uploadS3 = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'myaddresses',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
 
 /* PAGES */
 
@@ -102,6 +137,7 @@ res.render('topStores', { title: 'Top', stores });
  *  Upload Image
  *  Resize Image
  *  Register in folder ./public/uploads/
+ * https://stackoverflow.com/questions/40494050/ uploading-image-to-amazon-s3-using-multer-s3-nodejs
  */
 exports.upload = multer(multerOptions).single('photo');
 exports.resize = async (req,res,next) => {
@@ -114,9 +150,14 @@ exports.resize = async (req,res,next) => {
     req.body.photo = `${uuid.v4()}.${extension}`;
     const photo = await jimp.read(req.file.buffer);
     await photo.resize(800, jimp.AUTO);
-    await photo.write(`./public/uploads/${req.body.photo}`);
+    // https://lvdesign.com.fr/addressImages/
+    //await photo.write(`./public/uploads/${req.body.photo}`);
+    urlsite='https://lvdesign.com.fr/addressImages/'
+    await photo.write(`https://lvdesign.com.fr/addressImages/${req.body.photo}`);
     next();
 }
+
+
 
 
 

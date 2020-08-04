@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { $} from './bling';
 
-
+// const Places
 const mapOptions = {
     center:{ lat:43.2,lng:-79.8 },
     zoom: 10

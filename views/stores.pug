@@ -8,7 +8,8 @@ block content
         h2= title
         +pagination(page, pages, count)
 
-        .stores 
+        .stores
+            //- if store.private == 'non'  
             each store in stores
                 +storeCard(store)
                 

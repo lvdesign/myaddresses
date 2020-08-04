@@ -7,7 +7,9 @@ block content
   //- pre=h.dump(store)
   .single
     .single__hero
-      img.single__image(src=`/uploads/${store.photo || 'store.png'}`)     
+      //- img( src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`)
+      //-  single__image(src=`/uploads/${store.photo || 'store.png'}`) 
+      img.single__image( src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`)     
       h2.title.title--single 
         a(href=`/store/${store.slug}`) #{store.name}
 

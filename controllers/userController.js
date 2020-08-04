@@ -22,7 +22,8 @@ const multerOptions={
     }
 };
 
-// Upload Image
+// Upload Image Gravatar
+// Voir solution pour S3
 exports.upload = multer(multerOptions).single('gravatars');
 
 exports.resize = async (req,res,next) => {
