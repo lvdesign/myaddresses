@@ -10,7 +10,9 @@ mixin storeForm(store = {})
         label(for="photo") Ajouter une photo ?
         input(type="file" name="photo" id="photo" accept="image/png, image/jpeg")
         if store.photo
-            img(src=`/uploads/${store.photo}` alt=store.name width=200)
+            img(src=`https://lvdesign.com.fr/addressImages/${store.photo}` alt=store.name width=200)
+            //- https://lvdesign.com.fr/addressImages/
+            //- img(src=`/uploads/${store.photo}` alt=store.name width=200)
 
 
         //- address

@@ -16,9 +16,7 @@ aws.config.update({
 });
 */
 /*
-AWS_ACCESS_KEY_ID=AKIAJW3FG4B77JXDF7EA
-AWS_SECRET_ACCESS_KEY=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
-MY_BUCKET=myaddresses
+
 us-east-1	USA Est (Virginie du Nord)
 Désactiver le paramètre bloquer tout accès public peut avoir comme conséquence le fait que ce compartiment et les objets qu'il contient deviennent publics.
 USA Est (Virginie du Nord)
@@ -154,7 +152,8 @@ exports.resize = async (req,res,next) => {
     await photo.resize(800, jimp.AUTO);
     // https://lvdesign.com.fr/addressImages/
     //await photo.write(`./public/uploads/${req.body.photo}`);
-    urlsite='https://lvdesign.com.fr/addressImages/'
+    urlsite='https://lvdesign.com.fr/addressImages/';
+    
     await photo.write(`https://lvdesign.com.fr/addressImages/${req.body.photo}`);
     next();
 }
