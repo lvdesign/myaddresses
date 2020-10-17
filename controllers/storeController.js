@@ -5,6 +5,10 @@ const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 
+// Dependencies
+// var cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 /*
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
