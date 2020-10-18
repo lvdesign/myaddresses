@@ -4,10 +4,12 @@ block content
   .inner
     h2 Editez Votre Account #{user.name}
     if user 
-    img.avatar(src=`/uploads/gravatar/${ user.gravatars || 'avatar.svg' }` alt=user.name) 
+    //- src=`/uploads/gravatar/${ user.gravatars || 'avatar.svg' 
+    //- https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+    img.avatar(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${ user.gravatars || 'avatar_ampxzt.svg' }` alt=user.name) 
      
     if !user.gravatars
-    p ps. N'hésitez pas à ajouter un avatar #{user.name} !  
+    p ps. N'hésitez pas à ajouter un avatar de votre choix #{user.name} !  
 
 
     form(action="/account" method="POST" enctype="multipart/form-data")

@@ -9,7 +9,8 @@ block content
     .single__hero
       //- img( src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`)
       //-  single__image(src=`/uploads/${store.photo || 'store.png'}`) 
-      img.single__image( src=`https://lvdesign.com.fr/addressImages/${store.photo ||'store.png'}`)     
+      //- https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/store_dgepjl.png
+      img.single__image( src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)     
       h2.title.title--single 
         a(href=`/store/${store.slug}`) #{store.name}
 

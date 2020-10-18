@@ -16,7 +16,8 @@ block content
                     tr
                         td.txt
                             a(href=`/store/${store.slug}`)
-                                img.top__img(src=`/uploads/${store.photo ||'store.png' }`)
+                                //- src=`/uploads/${store.photo ||'store.png' 
+                                img.top__img(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png' }`)
                         td.txt #{i +1}
                         td.txt
                             a.special(href=`/store/${store.slug}`)= store.name 

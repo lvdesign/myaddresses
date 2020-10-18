@@ -6,14 +6,40 @@ const Store = mongoose.model('Store');
 const promisify = require('es6-promisify');
 
 
-const multer = require('multer');
+//const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+// import environmental variables from our variables.env file
+require('dotenv').config({ path: 'variables.env' });
+
+// process.env.DATABASE
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_cloud_name, 
+    api_key: process.env.CLOUDINARY_api_key, 
+    api_secret: process.env.CLOUDINARY_api_secret
+  });
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'myaddresses/gravatar/',
+      format: async (req, file) => 'png', // supports promises as well
+      //public_id: (req, file) => 'computed-filename-using-request',
+    },
+  });
+const parser = multer({ storage: storage });
+// https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+
+/*
 const multerOptions={
-    storage: multer.memoryStorage(),
+    storage: multer.memoryStorage(), // en memoire
     fileFilter(req,file,next){
-        const isPhoto = file.mimetype.startsWith('image/');
+        const isPhoto = file.mimetype.startsWith('image/'); type image/png
         if(isPhoto){
             next(null,true);
         }else{
@@ -21,23 +47,31 @@ const multerOptions={
         }
     }
 };
-
+*/
 // Upload Image Gravatar
 // Voir solution pour S3
-exports.upload = multer(multerOptions).single('gravatars');
+//exports.upload = multer(multerOptions).single('gravatars');
 
+exports.upload = parser.single('gravatars');
+
+// middleware
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
-        next();
+        next(); // to next middleware
         return; 
     }
     //console.log(req.file);
+    
+    // https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
     const extension = req.file.mimetype.split('/')[1];
     req.body.gravatars = `${uuid.v4()}.${extension}`;
     const gravatars= await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
-    await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
+    // https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/
+    // await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
+    await gravatars.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`);
     next();
+ 
 }
 
 

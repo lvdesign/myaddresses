@@ -34,7 +34,8 @@ html
                   span Admin
                 li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
                   //- img.avatar(src=user.gravatar + 'd=retro')
-                  img.avatar(src=`/uploads/gravatar/${user.gravatars || 'avatar.svg' }`)
+                  //- src=`/uploads/gravatar/${user.gravatars || 'avatar.svg' }`
+                  img.avatar(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${user.gravatars || 'avatar_ampxzt.svg' }`)
                   
               else
                 li.nav__item: a.nav__link(href="/register", class=(currentPath.startsWith('/register') ? 'nav__link--active' : '')) Register

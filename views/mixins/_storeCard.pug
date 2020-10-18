@@ -28,9 +28,11 @@ mixin storeCard(store={})
                     //- `/uploads/${store.photo ||'store.png'}`
                     //- https://lvdesign.com.fr/addressImages/store.png || https://lvdesign.com.fr/addressImages/${store.photo}`
                     //- src=`https://lvdesign.com.fr/addressImages/${store.photo ||'store.png'}`
+                    //- https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/store_dgepjl.png
 
                     //- img( src=`/uploads/${store.photo || 'store.png'}`)
-                img( src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`)
+                    //- src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`
+                img( src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${ store.photo ||'store_dgepjl.png'}`)
                 h2.title
                     a(href=`/store/${store.slug}`) #{store.name}
             .store__details

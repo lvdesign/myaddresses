@@ -9,54 +9,26 @@ const uuid = require('uuid');
 // var cloudinary = require('cloudinary');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-/*
-const aws = require('aws-sdk');
-const multerS3 = require('multer-s3');
 
-aws.config.update({
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    region: 'us-east-1'
-});
-*/
-/*
+// import environmental variables from our variables.env file
+require('dotenv').config({ path: 'variables.env' });
+// process.env.DATABASE
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_cloud_name, 
+    api_key: process.env.CLOUDINARY_api_key, 
+    api_secret: process.env.CLOUDINARY_api_secret
+  });
 
-us-east-1	USA Est (Virginie du Nord)
-Désactiver le paramètre bloquer tout accès public peut avoir comme conséquence le fait que ce compartiment et les objets qu'il contient deviennent publics.
-USA Est (Virginie du Nord)
-Facultatif	Non
-
-mLab en 
-us-east-1	USA Est (Virginie du Nord)
-*/
-
-//s3 = new aws.S3();
-
-
-const multerOptions={
-    storage: multer.memoryStorage(),
-    fileFilter(req,file,next){
-        const isPhoto = file.mimetype.startsWith('image/');
-        if(isPhoto){
-            next(null,true);
-        }else{
-            next({message: 'Type d\'image impossible' }, false);
-        }
-    }
-};
-
-/*
-const uploadS3 = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'myaddresses',
-        key: function (req, file, cb) {
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
-});
-*/
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'myaddresses/',
+      format: async (req, file) => 'jpeg',// supports promises as well
+      
+    },
+  });
+const parser = multer({ storage: storage });
+   
 /* PAGES */
 
 /**
@@ -143,7 +115,23 @@ res.render('topStores', { title: 'Top', stores });
  *  Register in folder ./public/uploads/
  * https://stackoverflow.com/questions/40494050/ uploading-image-to-amazon-s3-using-multer-s3-nodejs
  */
-exports.upload = multer(multerOptions).single('photo');
+/*
+
+const multerOptions={
+    storage: multer.memoryStorage(),
+    fileFilter(req,file,next){
+        const isPhoto = file.mimetype.startsWith('image/');
+        if(isPhoto){
+            next(null,true);
+        }else{
+            next({message: 'Type d\'image impossible' }, false);
+        }
+    }
+};
+*/
+// exports.upload = multer(multerOptions).single('photo');
+exports.upload = parser.single('photo');////
+
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
         next();
@@ -156,9 +144,13 @@ exports.resize = async (req,res,next) => {
     await photo.resize(800, jimp.AUTO);
     // https://lvdesign.com.fr/addressImages/
     //await photo.write(`./public/uploads/${req.body.photo}`);
-    urlsite='https://lvdesign.com.fr/addressImages/';
-    
-    await photo.write(`https://lvdesign.com.fr/addressImages/${req.body.photo}`);
+    // https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/store_dgepjl.png
+    //urlsite='https://lvdesign.com.fr/addressImages/';
+    // await photo.write(`https://lvdesign.com.fr/addressImages/${req.body.photo}`);
+
+    urlsite='https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/';
+
+    await photo.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${req.body.photo}`);
     next();
 }
 
