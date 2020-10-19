@@ -14,7 +14,7 @@ require('dotenv').config({ path: 'variables.env' });
 // https://github.com/Automattic/mongoose/issues/6667
 
 /** 
- * 
+ * { useNewUrlParser: true }
 */
 mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises

@@ -35,25 +35,23 @@ const storage = new CloudinaryStorage({
 const parser = multer({ storage: storage });
 // https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
 
-/*
+
 const multerOptions={
     storage: multer.memoryStorage(), // en memoire
     fileFilter(req,file,next){
-        const isPhoto = file.mimetype.startsWith('image/'); type image/png
+        const isPhoto = file.mimetype.startsWith('image/'); //type image/png
         if(isPhoto){
             next(null,true);
         }else{
             next({message: 'Type d\'image impossible' }, false);
-        }
+        }//
     }
 };
-*/
-// Upload Image Gravatar
-// Voir solution pour S3
-//exports.upload = multer(multerOptions).single('gravatars');
+exports.upload = multer(multerOptions).single('gravatars');
+
 
 exports.upload = parser.single('gravatars');
-
+//console.log(storage);
 // middleware
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
@@ -61,17 +59,15 @@ exports.resize = async (req,res,next) => {
         return; 
     }
     //console.log(req.file);
-    
-    // https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
     const extension = req.file.mimetype.split('/')[1];
     req.body.gravatars = `${uuid.v4()}.${extension}`;
-    const gravatars= await jimp.read(req.file.buffer);
+    const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
-    // https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/
-    // await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
-    await gravatars.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`);
-    next();
- 
+    await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
+    await cloudinary.v2.uploader.upload(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`,
+    function(error, result) {console.log(result, error)});
+    //await gravatars.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`);
+    next(); 
 }
 
 

@@ -14,7 +14,8 @@ mixin storeCard(store={})
                                 //- pre= h.dump(store._id)
                                 button.heart__button(type="submit" name="heart" class=heartClass)
                                     !=h.icon('heart')
-                    if user && store.author.equals(user._id) 
+                    //- if user && store.author.equals(user._id) 
+                    if user && store.author != user._id 
                         .store__action.store__action--edit
                             a(href=`/stores/${store._id}/edit`) 
                                 !=h.icon('pencil') 
@@ -32,13 +33,14 @@ mixin storeCard(store={})
 
                     //- img( src=`/uploads/${store.photo || 'store.png'}`)
                     //- src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`
-                img( src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${ store.photo ||'store_dgepjl.png'}`)
+                img(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)
                 h2.title
                     a(href=`/store/${store.slug}`) #{store.name}
+            
             .store__details
                 p.categories= store.categories
-                p Par #{store.author.name}
-                    em  ( #{h.moment(store.created).format("LL")} )
+                //- p Par #{store.author.name}
+                    //- em  ( #{h.moment(store.created).format("LL")} )
             
                 p= store.description.split(' ').slice(0, 25).join(' ')
                 //- p.priv #{store.private}
