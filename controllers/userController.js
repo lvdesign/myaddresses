@@ -27,7 +27,7 @@ cloudinary.config({
     cloudinary: cloudinary,  
     params:{
         allowedFormats: ["jpg", "png"],  
-        folder: 'myaddresses/', 
+        folder: 'myaddresses/gravatar', 
     }   
   });
 const parser = multer({ storage: storage });
@@ -59,17 +59,18 @@ exports.resize = async (req,res,next) => {
     }
     //console.log(req.file);
     const extension = req.file.mimetype.split('/')[1];
+    let toto = req.body.gravatars;
     req.body.gravatars = `${uuid.v4()}.${extension}`;
     const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
     await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
-    //var imagess = req.body.gravatars;
+    var imagess = req.body.gravatars;
     console.log('req.body.gravatars', req.body.gravatars );
-
     //await parser.single(`${imagess}`);
     //await cloudinary.uploader.upload(`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}`);
 
-    
+    await cloudinary.uploader.upload( "https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}", 
+        function(error, result) {console.log(result, error)});
     next(); 
 }
 // https://res.cloudinary.com/lvcloud/image/upload/v1603299683/myaddresses/gravatar/d40dcb8b-8233-459e-9261-4b61743198e0.jpeg.jpg
