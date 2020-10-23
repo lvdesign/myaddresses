@@ -147,7 +147,7 @@ exports.resize = async (req,res,next) => {
     const photo = await jimp.read(req.file.buffer);    
     await photo.resize(800, jimp.AUTO);
     // https://lvdesign.com.fr/addressImages/
-    //await photo.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${req.body.photo}`);
+    //await photo.write(`https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/${req.body.photo}`);
     await photo.write(`./public/uploads/${req.body.photo}`);
     //await photo.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${req.body.photo}`);
     //cloudinary.uploader.upload(`${req.body.photo}`, function(error, result) {console.log(result, error)});
@@ -167,7 +167,7 @@ exports.resize = async (req,res,next) => {
 }
 
 /*base direct*/
-// https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/store_dgepjl.png
+// https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/store_dgepjl.png
 
 
 /**

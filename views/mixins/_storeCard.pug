@@ -33,14 +33,14 @@ mixin storeCard(store={})
 
                     //- img( src=`/uploads/${store.photo || 'store.png'}`)
                     //- src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`
-                img(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)
+                img(src=`https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)
                 h2.title
                     a(href=`/store/${store.slug}`) #{store.name}
             
             .store__details
                 p.categories= store.categories
-                //- p Par #{store.author.name}
-                    //- em  ( #{h.moment(store.created).format("LL")} )
-            
-                p= store.description.split(' ').slice(0, 25).join(' ')
-                //- p.priv #{store.private}
+                //-p Par #{store.author.name}
+                //- em (#{h.moment(store.created).format("LL")} )
+                
+                //- p= store.description.split(' ').slice(0, 25).join(' ')
+                    //- p.priv #{store.private}

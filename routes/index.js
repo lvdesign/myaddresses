@@ -33,14 +33,15 @@ router.get('/add',
     storeController.addStore
     );
 // with images
-router.post('/add', 
+//storeController.upload,
+router.post('/add',  
     storeController.upload,
     catchErrors(storeController.resize),
     catchErrors(storeController.createStore) 
 );
-
+//storeController.upload,
 router.post('/add/:id', 
-    storeController.upload,
+storeController.upload,
     catchErrors(storeController.resize),
     catchErrors(storeController.updateStore) );
 
@@ -74,6 +75,7 @@ router.post('/register',
    
     userController.validateRegister,
     userController.upload,
+                    userController.uploader,
     catchErrors(userController.resize),
     catchErrors(userController.register),
     authController.login
@@ -89,9 +91,11 @@ router.get('/account',
     userController.account);
 
 // POST
+// userController.upload
 router.post('/account', 
 userController.upload,
-    catchErrors(userController.resize),
+                userController.uploader,
+catchErrors(userController.resize),
 catchErrors(userController.updateAccount) );
 
 router.post('/account/forgot',catchErrors(authController.forgot) );

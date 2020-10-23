@@ -3,7 +3,7 @@ mixin review(review)
         .review__author
             //- ${user.gravatars || 'avatar.svg'} 'avatar.svg' 
             //- src=`/uploads/gravatar/${review.author.gravatars || 'avatar.svg'}`           
-            img.avatar(src=`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${review.author.gravatars || 'avatar_ampxzt.svg'}`)
+            img.avatar(src=`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${review.author.gravatars || 'avatar_ampxzt.svg'}`)
             p.txtbolder= review.author.name
         .review__stars(title=`Rated ${review.rating} our of 5 stars`)
             = `★`.repeat(review.rating)

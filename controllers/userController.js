@@ -5,8 +5,6 @@ const Store = mongoose.model('Store');
 
 const promisify = require('es6-promisify');
 
-
-//const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 
@@ -24,16 +22,17 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_api_secret
   });
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: 'myaddresses/gravatar/',
-      format: async (req, file) => 'png', // supports promises as well
-      //public_id: (req, file) => 'computed-filename-using-request',
-    },
+
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,  
+    params:{
+        allowedFormats: ["jpg", "png"],  
+        folder: 'myaddresses/', 
+    }   
   });
 const parser = multer({ storage: storage });
-// https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+// https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+
 
 
 const multerOptions={
@@ -42,16 +41,16 @@ const multerOptions={
         const isPhoto = file.mimetype.startsWith('image/'); //type image/png
         if(isPhoto){
             next(null,true);
+            
         }else{
             next({message: 'Type d\'image impossible' }, false);
         }//
-    }
+    }//
 };
 exports.upload = multer(multerOptions).single('gravatars');
 
+exports.uploader = parser.single('gravatars');
 
-exports.upload = parser.single('gravatars');
-//console.log(storage);
 // middleware
 exports.resize = async (req,res,next) => {
     if(!req.file) { 
@@ -64,19 +63,25 @@ exports.resize = async (req,res,next) => {
     const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
     await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
-    await cloudinary.v2.uploader.upload(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`,
-    function(error, result) {console.log(result, error)});
-    //await gravatars.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/${req.body.gravatars}`);
+    //var imagess = req.body.gravatars;
+    console.log('req.body.gravatars', req.body.gravatars );
+
+    //await parser.single(`${imagess}`);
+    //await cloudinary.uploader.upload(`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}`);
+
+    
     next(); 
 }
-
-
+// https://res.cloudinary.com/lvcloud/image/upload/v1603299683/myaddresses/gravatar/d40dcb8b-8233-459e-9261-4b61743198e0.jpeg.jpg
 
 
 // Login FORM
 exports.loginForm = (req,res) => {
     res.render('login', { title: 'Login'});
 };
+
+
+/*///////////////////////////////////////////////////////////////////*/
 
 
 // Register 
