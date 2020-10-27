@@ -23,15 +23,7 @@ cloudinary.config({
   });
 
 
-  const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,  
-    params:{
-        allowedFormats: ["jpg", "png"],  
-        folder: 'myaddresses/gravatar', 
-    }   
-  });
-const parser = multer({ storage: storage });
-// https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+  
 
 
 
@@ -49,7 +41,7 @@ const multerOptions={
 };
 exports.upload = multer(multerOptions).single('gravatars');
 
-exports.uploader = parser.single('gravatars');
+
 
 // middleware
 exports.resize = async (req,res,next) => {
@@ -59,7 +51,6 @@ exports.resize = async (req,res,next) => {
     }
     //console.log(req.file);
     const extension = req.file.mimetype.split('/')[1];
-    let toto = req.body.gravatars;
     req.body.gravatars = `${uuid.v4()}.${extension}`;
     const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
@@ -67,14 +58,35 @@ exports.resize = async (req,res,next) => {
     var imagess = req.body.gravatars;
     console.log('req.body.gravatars', req.body.gravatars );
     //await parser.single(`${imagess}`);
-    //await cloudinary.uploader.upload(`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}`);
-
-    await cloudinary.uploader.upload( "https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}", 
-        function(error, result) {console.log(result, error)});
+    //await cloudinary.uploader.upload(`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}`);   
     next(); 
 }
 // https://res.cloudinary.com/lvcloud/image/upload/v1603299683/myaddresses/gravatar/d40dcb8b-8233-459e-9261-4b61743198e0.jpeg.jpg
 
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,  
+    params:{
+        allowedFormats: ["jpg", "png"],  
+        folder: 'myaddresses/gravatar', 
+    }   
+  });
+const parser = multer({ storage: storage });
+
+exports.uploaderCloudinary = async (req,res,next) => {
+    if(!req.file == req.body.gravatars) { 
+        next(); // to next middleware
+        return; 
+    } 
+    //var imagess = req.body.gravatars; 
+    console.log('uploaderCloudinary pour req.body.gravatars :', req.body.gravatars);
+    gravatar = req.body.gravatars;
+    //await parser.single('gravatar');
+    //await cloudinary.uploader.upload( `https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${gravatar}`, function(error, result) {console.log(result, error)});
+    next(); 
+}
+
+
+// https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
 
 // Login FORM
 exports.loginForm = (req,res) => {

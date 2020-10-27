@@ -74,9 +74,9 @@ router.get('/register', userController.registerForm );
 router.post('/register', 
    
     userController.validateRegister,
-    userController.upload,
-                    userController.uploader,
+    userController.upload,                
     catchErrors(userController.resize),
+    catchErrors(userController.uploaderCloudinary),
     catchErrors(userController.register),
     authController.login
 );
@@ -94,8 +94,8 @@ router.get('/account',
 // userController.upload
 router.post('/account', 
 userController.upload,
-                userController.uploader,
 catchErrors(userController.resize),
+catchErrors(userController.uploaderCloudinary),
 catchErrors(userController.updateAccount) );
 
 router.post('/account/forgot',catchErrors(authController.forgot) );
