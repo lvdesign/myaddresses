@@ -5,7 +5,7 @@ block content
     h2 Editez Votre Account #{user.name}
     if user 
     //- src=`/uploads/gravatar/${ user.gravatars || 'avatar.svg' 
-    //- https://res.cloudinary.com/dbcbwddro/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
+    //- https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
     img.avatar(src=`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${ user.gravatars || 'avatar_ampxzt.svg' }` alt=user.name) 
      
     if !user.gravatars

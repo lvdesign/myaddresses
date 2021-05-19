@@ -24,16 +24,13 @@ mixin storeCard(store={})
                         .store__action.store__action--count
                             !=h.icon('review')
                             span= store.reviews.length  
-                    //- addressImages 'store.png'
-                    //- `/uploads/${store.photo || 'https://lvdesign.com.fr/addressImages/store.png'} || '
-                    //- `/uploads/${store.photo ||'store.png'}`
-                    //- https://lvdesign.com.fr/addressImages/store.png || https://lvdesign.com.fr/addressImages/${store.photo}`
-                    //- src=`https://lvdesign.com.fr/addressImages/${store.photo ||'store.png'}`
-                    //- https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/store_dgepjl.png
-
+                    //- img(src=`https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)
+                    //- https://res.cloudinary.com/lvcloud/image/upload/v1621272034/myaddresses/dcd40d47-16bf-48cd-ae74-cb1caddeeec8.jpeg.jpg
                     //- img( src=`/uploads/${store.photo || 'store.png'}`)
                     //- src=`https://lvdesign.com.fr/addressImages/${ store.photo ||'store.png'}`
-                img(src=`https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/${store.photo ||'store_dgepjl.png'}`)
+                    //- https://res.cloudinary.com/lvcloud/image/upload/v1621272375/myaddresses/${store.photo}
+                    //- https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/7aa54244-e52b-4ec0-97bf-de3fd16c7cba.jpeg
+                img(src=`https://res.cloudinary.com/lvcloud/image/upload/v1621352680/myaddresses/${store.photo ||'store_dgepjl.png'}`)
                 h2.title
                     a(href=`/store/${store.slug}`) #{store.name}
             

@@ -1,25 +1,78 @@
 const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 const User = mongoose.model('User'); // pour Heart
-const multer = require('multer');
-const jimp = require('jimp');
-const uuid = require('uuid');
 
-// Dependencies
-// var cloudinary = require('cloudinary');
+// Image
+//require('dotenv').config({ path: 'variables.env' });  
+
+console.log("*------cloud_name Store-------*");
+console.log(process.env.CLOUDINARY_cloud_name);
+
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+//const streamifier = require('streamifier');
+//const fileUpload = multer();
+//const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// import environmental variables from our variables.env file
-require('dotenv').config({ path: 'variables.env' });
+const multer = require('multer');
 
-   
+const multerOptions={
+    storage: multer.memoryStorage(), // en memoire
+    fileFilter(req,file,next){
+        const isPhoto = file.mimetype.startsWith('image/');
+        if(isPhoto){
+            next(null,true);
+        }else{
+            next({message: 'Type d\'image impossible' }, false);
+        }
+    }
+};
+
+const jimp = require('jimp');
+const uuid = require('uuid'); 
+
+/**
+ *  Upload Image
+ *  Resize Image
+ *  Register in folder ./public/uploads/
+ */
+
+exports.upload = multer(multerOptions).single('photo');
+
+exports.resize = async (req,res,next) => {
+    if(!req.file) { 
+        next(); // skip to the next 
+        return; 
+    }   
+    console.log('---------rezise Store--------') ;
+    console.log(req.file.mimetype);
+    //const extension = req.file.mimetype.split('/')[1];    
+    //req.body.photo = `${uuid.v4()}.${extension}`;
+    // solution for cloudinary
+    req.body.photo = `${uuid.v4()}`;   
+    const photo = await jimp.read(req.file.buffer);    
+    await photo.resize(800, jimp.AUTO);    
+    await photo.write(`./public/uploads/${req.body.photo}.jpeg`);
+       my_public = req.body.photo;
+
+    await cloudinary.uploader.upload(`./public/uploads/${req.body.photo}.jpeg`, 
+            {folder:"myaddresses", public_id: `${my_public}`, format: 'jpeg' },
+                function(error, result) { console.log(result, error) });
+next();
+}
+
+//  height: 200, crop: "scale", fetch_format: "auto"
+// IMAGE Cloudinary
+// https://support.cloudinary.com/hc/en-us/community/posts/360007581379-Correct-way-of-uploading-from-buffer-
+
+
+
+
 /* PAGES */
 
 /**
  *  Home Page
  */
-exports.homePage = (req,res) =>{
+ exports.homePage = (req,res) =>{
     res.render('index');
 };
 
@@ -39,7 +92,7 @@ exports.editStore = async (req,res) => {
  *  About Page
  */
 exports.aboutPage = (req,res) =>{
-    res.render('about', {title: 'About My addreses'});
+    res.render('about');
 };
 
 /**
@@ -70,6 +123,8 @@ exports.mapPage= (req,res) => {
     res.render('map', { title: 'Map'});
 }
 
+
+
 // Page Hearts 
 // retrouve toutes les stores avec un coeur de l'utilisateur
 exports.getHearts = async (req,res) => {
@@ -94,80 +149,10 @@ res.render('topStores', { title: 'Top', stores });
 
 
 
-/**
- *  Upload Image
- *  Resize Image
- *  Register in folder ./public/uploads/
- * https://stackoverflow.com/questions/40494050/ uploading-image-to-amazon-s3-using-multer-s3-nodejs
- */
 
 
-const multerOptions={
-    storage: multer.memoryStorage(),
-    fileFilter(req,file,next){
-        const isPhoto = file.mimetype.startsWith('image/');
-        if(isPhoto){
-            next(null,true);
-        }else{
-            next({message: 'Type d\'image impossible' }, false);
-        }
-    }
-};
 
-// process.env.DATABASE
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_cloud_name, 
-    api_key: process.env.CLOUDINARY_api_key, 
-    api_secret: process.env.CLOUDINARY_api_secret
-  });
-/*
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: 'myaddresses/',
-      format: async (req, file) => 'jpeg',// supports promises as well      
-    },
-  });
-  const parser = multer({ storage: storage });
-  exports.upload = parser.single('photo');
 
-*/
-exports.upload = multer(multerOptions).single('photo');
-
-exports.resize = async (req,res,next) => {
-    if(!req.file) { 
-        next();
-        return; 
-    }
-    
-    // console.log(req.file);
-   
-    const extension = req.file.mimetype.split('/')[1];
-    req.body.photo = `${uuid.v4()}.${extension}`;
-    const photo = await jimp.read(req.file.buffer);    
-    await photo.resize(800, jimp.AUTO);
-    // https://lvdesign.com.fr/addressImages/
-    //await photo.write(`https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/${req.body.photo}`);
-    await photo.write(`./public/uploads/${req.body.photo}`);
-    //await photo.write(`https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/${req.body.photo}`);
-    //cloudinary.uploader.upload(`${req.body.photo}`, function(error, result) {console.log(result, error)});
-    // urlsite='https://res.cloudinary.com/dbcbwddro/image/upload/v1603012406/myaddresses/';
-
-    const storage = new CloudinaryStorage({
-        cloudinary: cloudinary,
-        params: {
-          folder: 'myaddresses/',
-          format: async (req, file) => 'jpeg',// supports promises as well      
-        },
-      });
-      const parser = multer({ storage: storage });
-      exports.upload = parser.single('photo');
-    
-    next();
-}
-
-/*base direct*/
-// https://res.cloudinary.com/lvcloud/image/upload/v1603012406/myaddresses/store_dgepjl.png
 
 
 /**
@@ -223,6 +208,7 @@ exports.createStore = async (req,res) =>{
     //console.log('OK saved');
     res.redirect(`/store/${store.slug}`);
     //res.json(req.body);
+    console.log('---------createStore--------');
 };
 
 
@@ -358,4 +344,4 @@ exports.heartStore = async(req,res) => {
             )
     //console.log(hearts);
     res.json(user);
-};
+};//

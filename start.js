@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
 
 // Make sure we are running node 7.6+
 const [major, minor] = process.versions.node.split('.').map(parseFloat);
@@ -10,23 +11,32 @@ if (major < 7 || (major === 7 && minor <= 5)) {
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
 
+
+const config = {
+  autoIndex: false,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+};
 // Connect to our Database and handle any bad connections
-// https://github.com/Automattic/mongoose/issues/6667
 
-/** 
- * { useNewUrlParser: true }
-*/
+mongoose.connect(process.env.DATABASE,config);
 
-mongoose.connect(process.env.DATABASE, { useUnifiedTopology: true, useNewUrlParser: true });
-mongoose.set('useCreateIndex', true);
-mongoose.set('returnOriginal', false);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+
 mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
 
-// READY?! Let's go!
+// READY?! Let's go! 
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_cloud_name, 
+    api_key: process.env.CLOUDINARY_api_key, 
+    api_secret: process.env.CLOUDINARY_api_secret,
+    folder: process.env.CLOUDINARY_folder
+  }); 
 
 // import Models
 require('./models/Store');

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
 
-
 const storeSchema = new mongoose.Schema({
     name: {
         type:String,
@@ -43,6 +42,7 @@ const storeSchema = new mongoose.Schema({
         }
     },
     photo: String,
+    //image:[{path:String, filename:String }], // new cloudinary
     author: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
@@ -83,17 +83,17 @@ storeSchema.pre('save', async function(next){
 storeSchema.statics.getTagsList = function(){
     return this.aggregate([
        { $unwind: '$tags'},
-       { $group:{ _id: '$tags', count:{$sum:1} } },
-       { $sort: {count: -1} }
+       { $group:{ _id: '$tags', countDocuments :{$sum:1} } },
+       { $sort: {countDocuments : -1} }
     ]);
 }
 
-// Catgeories requete
+// Catgeories requete countDocuments count
 storeSchema.statics.getCatsList = function(){
     return this.aggregate([
        { $unwind: '$categories'},
-       { $group:{ _id: '$categories', count:{$sum:1} } },
-       { $sort: {count: -1} }
+       { $group:{ _id: '$categories', countDocuments :{$sum:1} } },
+       { $sort: {countDocuments : -1} }
 
     ]);
 };

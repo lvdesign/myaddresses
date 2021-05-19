@@ -2,42 +2,30 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 const Store = mongoose.model('Store');
-
 const promisify = require('es6-promisify');
-
+const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
-
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
 
-// process.env.DATABASE
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_cloud_name, 
-    api_key: process.env.CLOUDINARY_api_key, 
-    api_secret: process.env.CLOUDINARY_api_secret
-  });
+console.log("*------cloud_name User-------*");
+console.log(process.env.CLOUDINARY_cloud_name);
 
-
-  
-
+const cloudinary = require('cloudinary').v2;
 
 
 const multerOptions={
-    storage: multer.memoryStorage(), // en memoire
+    storage: multer.memoryStorage(),
     fileFilter(req,file,next){
-        const isPhoto = file.mimetype.startsWith('image/'); //type image/png
+        const isPhoto = file.mimetype.startsWith('image/');
         if(isPhoto){
             next(null,true);
-            
         }else{
             next({message: 'Type d\'image impossible' }, false);
-        }//
-    }//
+        }
+    }
 };
 exports.upload = multer(multerOptions).single('gravatars');
 
@@ -50,40 +38,21 @@ exports.resize = async (req,res,next) => {
         return; 
     }
     //console.log(req.file);
+    console.log('---------rezise User --------') ;
     const extension = req.file.mimetype.split('/')[1];
-    req.body.gravatars = `${uuid.v4()}.${extension}`;
+    //req.body.gravatars = `${uuid.v4()}.${extension}`;
+    req.body.gravatars = `${uuid.v4()}`;
     const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
     await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
-    var imagess = req.body.gravatars;
-    console.log('req.body.gravatars', req.body.gravatars );
-    //await parser.single(`${imagess}`);
-    //await cloudinary.uploader.upload(`https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${imagess}`);   
+    my_public_gravatar = req.body.gravatars;
+    await cloudinary.uploader.upload(`./public/uploads/gravatar/${req.body.gravatars}.jpeg`, 
+            {folder:"myaddresses/gravatar", public_id: `${my_public_gravatar}`, format: 'jpeg' },
+            function(error, result) { console.log(result, error) });
+    
     next(); 
 }
-// https://res.cloudinary.com/lvcloud/image/upload/v1603299683/myaddresses/gravatar/d40dcb8b-8233-459e-9261-4b61743198e0.jpeg.jpg
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,  
-    params:{
-        allowedFormats: ["jpg", "png"],  
-        folder: 'myaddresses/gravatar', 
-    }   
-  });
-const parser = multer({ storage: storage });
-
-exports.uploaderCloudinary = async (req,res,next) => {
-    if(!req.file == req.body.gravatars) { 
-        next(); // to next middleware
-        return; 
-    } 
-    //var imagess = req.body.gravatars; 
-    console.log('uploaderCloudinary pour req.body.gravatars :', req.body.gravatars);
-    gravatar = req.body.gravatars;
-    //await parser.single('gravatar');
-    //await cloudinary.uploader.upload( `https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/${gravatar}`, function(error, result) {console.log(result, error)});
-    next(); 
-}
 
 
 // https://res.cloudinary.com/lvcloud/image/upload/v1603011860/myaddresses/gravatar/avatar_ampxzt.svg
