@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const cloudinary = require('cloudinary').v2;
 
 // Make sure we are running node 7.6+
@@ -13,16 +14,29 @@ require('dotenv').config({ path: 'variables.env' });
 
 
 const config = {
-  autoIndex: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
+  
 };
 // Connect to our Database and handle any bad connections
 
-mongoose.connect(process.env.DATABASE,config);
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true,
+  useFindAndModify:false,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
+/*
+mongoose.createConnection(process.env.DATABASE,{
+  useNewUrlParser: true,
+  useFindAndModify:false,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+*/
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
 mongoose.connection.on('error', (err) => {

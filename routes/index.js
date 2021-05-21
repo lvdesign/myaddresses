@@ -8,21 +8,18 @@ const authController = require('../controllers/authController');
 
 const reviewController = require('../controllers/reviewController');
 
-// Image
-require('dotenv').config({ path: 'variables.env' });  
-
-console.log("*------cloud_name INDEX-------*");
-console.log(process.env.CLOUDINARY_cloud_name);
-
-const multer  = require('multer');
-const cloudinary = require('cloudinary').v2
-
 
 // Admin
 router.get('/admin', 
     authController.isLoggedIn, 
     catchErrors( storeController.getAdminStores) );
 
+router.post('/admin/remove/:id',
+    authController.isLoggedIn, 
+    catchErrors( storeController.removeStore)
+)
+// About
+router.get('/about', storeController.aboutPage);
 
 // Home
 router.get('/', catchErrors( storeController.getStores) );
@@ -30,23 +27,21 @@ router.get('/stores', catchErrors( storeController.getStores) );
 // pagination -> :page
 router.get('/stores/page/:page', catchErrors( storeController.getStores) );
 
-// About
-router.get('/about', catchErrors( storeController.aboutPage) );
-
 // Add STORE
 router.get('/add', 
     authController.isLoggedIn, 
     storeController.addStore
     );
 // with images
-router.post('/add', 
+//storeController.upload,
+router.post('/add',  
     storeController.upload,
     catchErrors(storeController.resize),
     catchErrors(storeController.createStore) 
 );
-
+//storeController.upload,
 router.post('/add/:id', 
-    storeController.upload,
+storeController.upload,
     catchErrors(storeController.resize),
     catchErrors(storeController.updateStore) );
 
@@ -76,9 +71,11 @@ router.get('/login', userController.loginForm );
 router.post('/login', authController.login);
 
 router.get('/register', userController.registerForm );
-router.post('/register',    
+router.post('/register', 
+   
     userController.validateRegister,
     userController.upload,
+                    
     catchErrors(userController.resize),
     catchErrors(userController.register),
     authController.login
@@ -94,10 +91,11 @@ router.get('/account',
     userController.account);
 
 // POST
+// userController.upload
 router.post('/account', 
-userController.upload,
+    userController.upload,
     catchErrors(userController.resize),
-catchErrors(userController.updateAccount) );
+    catchErrors(userController.updateAccount) );
 
 router.post('/account/forgot',catchErrors(authController.forgot) );
 

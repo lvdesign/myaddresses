@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
+
 const User = mongoose.model('User');
 
 const Store = mongoose.model('Store');

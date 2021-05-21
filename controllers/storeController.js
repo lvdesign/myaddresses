@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const Store = mongoose.model('Store');
 const User = mongoose.model('User'); // pour Heart
 
@@ -91,8 +92,8 @@ exports.editStore = async (req,res) => {
 /**
  *  About Page
  */
-exports.aboutPage = (req,res) =>{
-    res.render('about');
+ exports.aboutPage = (req,res) =>{
+    res.render('about', {title: 'About My addreses'});
 };
 
 /**
