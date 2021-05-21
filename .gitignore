@@ -7,4 +7,4 @@ variables.env.now
 photos/
 doc.md
 ##public/uploads/*
-# npm run dev
+# npm run devnode_modules
