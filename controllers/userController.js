@@ -41,12 +41,12 @@ exports.resize = async (req,res,next) => {
     }
     //console.log(req.file);
     console.log('---------rezise User --------') ;
-    const extension = req.file.mimetype.split('/')[1];
+    //const extension = req.file.mimetype.split('/')[1];
     //req.body.gravatars = `${uuid.v4()}.${extension}`;
     req.body.gravatars = `${uuid.v4()}`;
     const gravatars = await jimp.read(req.file.buffer);
     await gravatars.resize(400, jimp.AUTO);
-    await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}`);
+    await gravatars.write(`./public/uploads/gravatar/${req.body.gravatars}.jpeg`);
     my_public_gravatar = req.body.gravatars;
     await cloudinary.uploader.upload(`./public/uploads/gravatar/${req.body.gravatars}.jpeg`, 
             {folder:"myaddresses/gravatar", public_id: `${my_public_gravatar}`, format: 'jpeg' },
