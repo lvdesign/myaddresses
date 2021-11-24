@@ -48,6 +48,7 @@ p {
   font-size: 1.6rem;
 }
 
+// h2.title.title--single 
 .title {
   word-wrap: break-word;
   position: relative;
@@ -89,6 +90,15 @@ p {
   margin-top: -9rem;
   font-size: 6rem;  
   text-align: center;
+}
+@media all and (max-width: 550px) {
+
+  .title--single {
+    max-width: 300px;
+    margin-top: -9rem;
+    font-size: 4rem;  
+    text-align: center;
+    }
 }
 
 .txtbolder{
