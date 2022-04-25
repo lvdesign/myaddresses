@@ -28,11 +28,12 @@ mixin storeForm(store = {})
         input(type="hidden" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0] ) required)
         label(for="lat") 
         input(type="hidden" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1] ) required )
+       
 
         
         //- categories
         p 
-         em Choisissez une catégorie
+            em Choisissez une catégorie
         - const choix =['Restaurant','Bar','Hôtel','Boutique','Services']
         - const categories = store.categories || ''
         
@@ -46,7 +47,7 @@ mixin storeForm(store = {})
         p
             em  Sélectionnez des tags appropriés
         - const choices = ['Wifi','Fashion','Familiale','Ootd','Lifestyle','Tip','Omnomnom','Homemade','Techie','Fitlife'] 
-        - const  tags = store.tags || []    
+        - const  tags = store.tags || []    
         ul.tags
             each choice in choices
              .tag.tag__choice
@@ -64,5 +65,5 @@ mixin storeForm(store = {})
                 input(type="radio"  id=val value=val  name="private"  checked= (valeur.includes(val))  )           
                 label(for="val") #{val}       
 
-
+        pre= h.dump(store)
         input(type="submit" value= "Sauvegardez votre adresse" class="button")

@@ -34,7 +34,7 @@ const storeSchema = new mongoose.Schema({
         },
         coordinates: [{
                 type: Number,
-                required: 'Coordinates !'
+                required: 'Donnez des Coordinates!'
             }],
         address:{
             type: String,
