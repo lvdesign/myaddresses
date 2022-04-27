@@ -765,6 +765,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 function autocomplete(input, latInput, lngInput) {
     //console.log(imput, latInput, lngInput);
+
     if (!input) return;
 
     var dropdown = new google.maps.places.Autocomplete(input);
@@ -772,7 +773,6 @@ function autocomplete(input, latInput, lngInput) {
     dropdown.addListener('place_changed', function () {
         var place = dropdown.getPlace();
         //console.log(place);
-
         latInput.value = place.geometry.location.lat();
         lngInput.value = place.geometry.location.lng();
     });
@@ -883,7 +883,7 @@ function loadPlaces(map) {
         markers.forEach(function (marker) {
             return marker.addListener('click', function () {
                 //console.log(this.place);
-                var html = '\n          <div class="popup">\n            <a class="special" href="/store/' + this.place.slug + '">\n              <img src="/uploads/' + (this.place.photo || 'store.png') + '" alt="' + this.place.name + '" />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
+                var html = '\n          <div class="popup">\n            <a class="special" href="/store/' + this.place.slug + '">\n              <img \n              src="/uploads/' + (this.place.photo || 'store.png') + '" \n              alt="' + this.place.name + '" \n              />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
                 infoWindow.setContent(html);
                 infoWindow.open(map, this);
             });

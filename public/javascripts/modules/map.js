@@ -1,22 +1,24 @@
 import axios from 'axios';
-import { $} from './bling';
+import { $ } from './bling';
 
 // const Places
+// 48.8588335 2.2768242
+// lat:43.2,lng:-79.8
 const mapOptions = {
-    center:{ lat:43.2,lng:-79.8 },
+    center:{ lat:48.85,lng:2.27 },
     zoom: 10
 }
 
 
-function loadPlaces(map, lat=43.2,lng=-79.8){
+function loadPlaces(map, lat=48.85,lng=2.27){
     axios.get(`/api/stores/near?lat=${lat}&lng=${lng}`)
     .then(res => {
         const places = res.data;
         if(!places.length){
-            alert('No places');
+            alert('No places found!');
             return;
         }
-        console.log(places);
+        //console.log(places);
         // Bounds
         const bounds = new google.maps.LatLngBounds();
         // Infos
@@ -37,13 +39,11 @@ function loadPlaces(map, lat=43.2,lng=-79.8){
       // Clic Info when someone clicks on a marker, show the details of that place
       markers.forEach(marker => marker.addListener('click', function() {
         //console.log(this.place);
+        // class="special"
         const html = `
           <div class="popup">
-            <a class="special" href="/store/${this.place.slug}">
-              <img 
-              src="/uploads/${this.place.photo || 'store.png'}" 
-              alt="${this.place.name}" 
-              />
+            <a  href="/store/${this.place.slug}">
+              <img src="/uploads/${this.place.photo || 'store.png'}" alt="${this.place.name}" />
               <p>${this.place.name} - ${this.place.location.address}</p>
             </a>
           </div>

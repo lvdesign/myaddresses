@@ -310,23 +310,27 @@ exports.searchStores = async (req,res) => {
  * MAP Location lat lng
  */
 exports.mapStores = async (req,res) => {
-    //res.json( {it: 'Work'});
+    //res.json( {it: 'Work!!!'});
+    //res.json(req.query);
+    // http://localhost:7777/api/stores/near?lat=48.85&lng=2.27
+
     const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
-    const q = {
-        location: {
+    //res.json(coordinates);
+   const q = {
+       location: {
             $near: {
                 $geometry: {
                     type:'Point',
-                    coordinates: coordinates
+                    coordinates //: coordinates
                 },
                 $maxDistance: 10000 // 10km
             }
         }
-    }
+    };
     const stores = await Store
         .find(q)
-        .select('slug name description photo location');
-    res.json(stores);
+        .select('slug name description photo location').limit(10);
+    res.json(stores); 
 }
 
 
