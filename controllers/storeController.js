@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.set('useFindAndModify', false);
+//mongoose.set('useFindAndModify', false);
 const Store = mongoose.model('Store');
 const User = mongoose.model('User'); // pour Heart
 

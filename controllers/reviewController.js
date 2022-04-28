@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.set('useFindAndModify', false);
+//mongoose.set('useFindAndModify', false);
 const Review = mongoose.model('Review');
 
 exports.addReview = async (req, res) => {

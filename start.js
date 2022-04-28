@@ -13,17 +13,15 @@ if (major < 7 || (major === 7 && minor <= 5)) {
 require('dotenv').config({ path: 'variables.env' });
 
 
-const config = {
-  
-};
 // Connect to our Database and handle any bad connections
-
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useFindAndModify:false,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(process.env.DATABASE);
+// mongoose.connect(process.env.DATABASE, {
+//   useNewUrlParser: true,
+//   useFindAndModify:false,
+//   /useCreateIndex: true,
+//   useUnifiedTopology: true
+// }); //
+//mongoose.set('useFindAndModify', false);
 /*
 mongoose.createConnection(process.env.DATABASE,{
   useNewUrlParser: true,
@@ -33,7 +31,7 @@ mongoose.createConnection(process.env.DATABASE,{
 });
 
 mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
+
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 */
